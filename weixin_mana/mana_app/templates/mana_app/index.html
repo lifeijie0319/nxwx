@@ -1,0 +1,236 @@
+{% load cus_filters %}
+<!DOCTYPE html>
+<!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>微信银行管理系统</title>
+
+    <meta name="description" content="银硕web模板">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="/static/mana_app/asset/img/favicons/favicon.png">
+    <link rel="icon" type="image/png" href="/static/mana_app/asset/img/favicons/favicon-96x96.png" sizes="96x96">
+    <!-- END Icons -->
+
+    <!-- Stylesheets -->
+    <!-- Page JS Plugins CSS go here -->
+    <link rel="stylesheet" href="/static/mana_app/asset/plugin/bootstrap-sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/static/mana_app/asset/plugin/bootstrap-sweetalert/ie9.css">
+    <link rel="stylesheet" href="/static/mana_app/asset/plugin/rwd-table/css/rwd-table.min.css">
+
+    <!-- OneUI CSS framework -->
+    <link rel="stylesheet" href="/static/mana_app/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/mana_app/asset/css/oneui.min.css">
+    <link rel="stylesheet" href="/static/mana_app/asset/css/bootstrap-multiselect.css">
+    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+    <link rel="stylesheet" id="css-main" href="/static/mana_app/css/ys_main.css">
+    <link rel="stylesheet" id="css-main" href="/static/mana_app/css/main.css">
+    <!-- END Stylesheets -->
+
+    <!-- <script type="text/javascript" src="/static/mana_app/asset/js/jquery-3.2.1.min.js"></script> -->
+    <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+    <script type="text/javascript" src="/static/mana_app/asset/js/oneui.min.js"></script>
+    <!--script type="text/javascript" src="/static/mana_app/asset/js/bootstrap.min.js"></script -->
+    <!-- Page JS Plugins + Page JS Code -->
+    <script src="/static/mana_app/asset/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/static/mana_app/asset/plugin/bootstrap-sweetalert/sweetalert.min.js"></script>
+    <script src="/static/mana_app/asset/plugin/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/static/mana_app/asset/plugin/jquery-validation/custom-methods.js"></script>
+    <script src="/static/mana_app/asset/plugin/rwd-table/js/rwd-table.js"></script>
+    <script src="/static/mana_app/js/uiBlocksApi.js"></script>
+    <script src="/static/mana_app/js/tools.js"></script>
+    <script src="/static/mana_app/js/index.js"></script>
+</head>
+<body>
+<div id="loading" style="display:none">
+    <img src="/static/mana_app/img/loading.gif">
+</div>
+<!-- Page Container -->
+<div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <!-- Sidebar Scroll Container -->
+        <div id="sidebar-scroll">
+            <!-- Sidebar Content -->
+            <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
+            <div class="sidebar-content">
+                <!-- Side Header -->
+                <div class="side-header side-content bg-white-op">
+                    <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                    <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button"
+                            data-toggle="layout" data-action="sidebar_close">
+                        <i class="fa fa-times"></i>
+                    </button>
+
+                    <a class="logo h5 text-black">
+                        <img src="/static/mana_app/asset/img/logo_sigle.png" width="24"> <span
+                            class="font-w600 sidebar-mini-hide">{{ cur_inst }}</span>
+                    </a>
+                </div>
+                <!-- END Side Header -->
+                <div class="side-content">
+                    <ul class="nav-main">
+                        {% for level1 in menu %}
+                        <li class="nav-main-heading"><span class="sidebar-mini-hide">{{ level1.name }}</span></li>
+                        {% for level2 in level1.sub %}
+                        <li menu_level="2">
+                            <a class="nav-submenu" menu_id="{{ level2.id }}" data-toggle="nav-submenu" href="#"><i class="si si-direction"></i><span class="sidebar-mini-hide">{{ level2.name }}</span></a>
+                            <ul>
+                                <li>
+                                    {% for level3 in level2.sub %}
+                                    <a class="frame-link" menu_level="3" menu_id="{{ level3.id }}" href="{% url level3.url_name|add_pre:'mana_app:' %}">{{ level3.name }}</a>
+                                    {% endfor %}
+                                </li>
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            <!-- Sidebar Content -->
+        </div>
+        <!-- END Sidebar Scroll Container -->
+    </nav>
+    <!-- END Sidebar -->
+
+    <!-- Header -->
+    <header id="header-navbar" class="content-mini content-mini-full">
+        <!-- Header Navigation Right -->
+        <ul class="nav-header pull-right">
+            <li>
+                <div class="btn-group">
+                    <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
+                        <img src="/static/mana_app/asset/img/avatars/avatar.png" alt="Avatar">
+                        <span class="push-10-r">{{ manager_account }}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a id="PW_Change_modal" tabindex="-1" href="javascript:void(0)">
+                                <i class="si si-settings pull-right"></i>修改密码
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="{% url 'mana_app:logout' %}">
+                                <i class="si si-logout pull-right"></i>注销
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!-- END Header Navigation Right -->
+
+        <!-- Header Navigation Left -->
+        <ul class="nav-header pull-left">
+            <li class="hidden-md hidden-lg">
+                <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                <button class="btn btn-default" data-toggle="layout" data-action="sidebar_toggle" type="button">
+                    <i class="fa fa-navicon"></i>
+                </button>
+            </li>
+            <li class="hidden-xs hidden-sm">
+                <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                <button class="btn btn-default" data-toggle="layout" data-action="sidebar_mini_toggle" type="button">
+                    <i class="fa fa-ellipsis-v"></i>
+                </button>
+            </li>
+
+            <!--标题头处一级菜单-->
+            {% for level1 in menu %}
+            <li><button class="btn btn-default level_menu" id="{{ forloop.counter }}">{{ level1.name }}</button></li>
+            {% endfor %}
+        </ul>
+        <!-- END Header Navigation Left -->
+    </header>
+    <!-- END Header -->
+
+    <!-- Main Container -->
+    <main id="main-container">
+        <!-- Page Header -->
+        <div id="page-title" class="content bg-gray-lighter">
+            <div class="row items-push">
+                <div class="col-sm-7">
+                    <h1 class="page-heading">
+                        <!--内容区标题显示-->
+                        <small></small>
+                    </h1>
+                </div>
+                <div class="col-sm-5 text-right hidden-xs">
+                    <button class="btn btn-default level_menu" onclick="javascript:history.go(-1);">返回上一级</button>
+                </div>
+            </div>
+        </div>
+        <!-- END Page Header -->
+    {% block content %}
+    {% endblock %}
+    </main>
+    <!-- END Main Container -->
+
+    <!-- Footer -->
+    <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
+        <div class="pull-right">
+            备案号：6468-4412
+        </div>
+        <div class="pull-left">
+            <a class="font-w400" href="javascript:void(0)" target="_blank">上海银硕软件技术有限公司</a> &copy; <span>2017</span>
+        </div>
+    </footer>
+    <!-- END Footer -->
+
+</div>
+<!-- END Page Container -->
+
+<div class="modal fade" id="PW_Change">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">密码修改</h4>
+            </div>
+            <div class="block-content">
+            <form class="form-horizontal" id="passwd_change_form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="base_manager_account">账户 </label>
+                    <div class="col-md-7">
+                        <input class="form-control" type="text" id="base_manager_account" name="base_manager_account" disabled value="{{ manager_account }}" >
+                    </div>
+                </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="base_old_passwd">原密码 <span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <input class="form-control" type="password" id="base_old_passwd" name="base_old_passwd"  placeholder="请输入原密码">
+                    </div>
+                </div>
+
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="base_new_passwd">新密码 <span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <input class="form-control" type="password" id ="base_new_passwd" name="base_new_passwd"  placeholder="请输入新密码" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="base_new_passwd_confirm">新密码确认 <span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <input class="form-control" type="password" name="base_new_passwd_confirm" id="base_new_passwd_confirm"  placeholder="请确认新密码">
+                    </div>
+                </div>
+              </form>
+            </div>
+           <div class="modal-footer">
+                <button type="button" class="btn blue" id="pw_change_button">更新</button>
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+           </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

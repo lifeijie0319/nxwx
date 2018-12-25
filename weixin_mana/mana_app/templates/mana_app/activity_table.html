@@ -1,0 +1,56 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">活动名称</th>
+                            <th class="text-center">活动描述</th>
+                            <th class="text-center">活动类型</th>
+                            <th class="text-center">客户输入字段</th>
+                            <th class="text-center">状态</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr item_id="{{ item.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ item.name }}</td>
+                            <td field="description">{{ item.description }}</td>
+                            <td field="typ">{{ item.typ }}</td>
+                            <td field="key">{{ item.key }}</td>
+                            <td field="status">{{ item.status }}</td>
+                            <td>
+                                <button name="ext_info" class="btn btn-sm btn-success"
+                                data-toggle="modal" data-target="#ext_modal">扩展信息</button>
+                                {% if item.status == '未使用' %}
+                                <input name="update" type="button" class="btn btn-sm btn-success" value="启用"/>
+                                {% else %}
+                                <input name="update" type="button" class="btn btn-sm btn-danger" value="禁用"/>
+                                {% endif %}
+                                <input name="delete" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="upload" type="button" class="btn btn-sm btn-warning" value="图片上传"/>
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if items %}
+<ul class="pager">
+    {% if items.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ items.number }}页</li>
+    <li name="total_page">共{{ items.paginator.num_pages }}页</li>
+    <li name="count">共{{ items.paginator.count }}条数据</li>
+    {% if items.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

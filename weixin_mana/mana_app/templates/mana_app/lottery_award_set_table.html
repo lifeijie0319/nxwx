@@ -1,0 +1,13 @@
+{% for lottery_award in lottery_awards %}
+<tr lottery_award_id="{{ lottery_award.id }}">
+    <td>{{ forloop.counter }}</td>
+    <td field="dec">{{ lottery_award.dec }}</td>
+    <td field="credits">{%ifequal lottery_award.type '优惠券'%}{%for i in coupons%}{%ifequal i.id lottery_award.credits%}{{i.name}}{%endifequal%}{%endfor%}{%else%}{{ lottery_award.credits }}{%endifequal%}</td>
+    <td field="type">{{ lottery_award.type }}</td>
+    <td field="pro">{{ lottery_award.pro }}</td>
+    <td>
+        <input name="delete_lottery_award" type="button" class="btn btn-sm btn-danger" value="删除"/>
+        <input name="update_lottery_award" type="button" class="btn btn-sm btn-success" value="更新"/>
+    </td>
+</tr>
+{% endfor%}

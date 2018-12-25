@@ -1,0 +1,145 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">优惠券条件代码</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="query_coupon_term_code" placeholder="请填写要查询的优惠券条件代码">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-coupon_term">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_coupon_term_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <h3 class="block-title">优惠券条件设置</h3>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="1">代码</th>
+                            <th class="text-center" data-priority="1">描述</th>
+                            <th class="text-center" data-priority="1">开始日期</th>
+                            <th class="text-center" data-priority="1">结束日期</th>
+                            <th class="text-center" data-priority="1">参数X</th>
+                            <th class="text-center" data-priority="1">参数Y</th>
+                            <th class="text-center" data-priority="1">参数Z</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for coupon_term in coupon_terms %}
+                        <tr coupon_term_id="{{ coupon_term.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="code">{{ coupon_term.code }}</td>
+                            <td field="description">{{ coupon_term.description }}</td>
+                            <td field="start_date">{{ coupon_term.start_date|date:"Y-m-d" }}</td>
+                            <td field="end_date">{{ coupon_term.end_date|date:"Y-m-d" }}</td>
+                            <td field="arg_x">{{ coupon_term.arg_x }}</td>
+                            <td field="arg_y">{{ coupon_term.arg_y }}</td>
+                            <td field="arg_z">{{ coupon_term.arg_z }}</td>
+                            <td>
+                                <input name="update_coupon_term" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="coupon_term_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        更新优惠券条件参数
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="coupon_term_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="code">条件代码</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="16" name="code" disabled>                  
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="description">条件描述</label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="description" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="start_date">开始日期</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date" name="start_date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="end_date">结束日期</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date" name="end_date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="arg_x">参数X</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="10" name="arg_x" placeholder="请输入整数或者浮点数">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="arg_y">参数Y</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="10" name="arg_y" placeholder="请输入整数或者浮点数">                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="arg_z">参数X</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="10" name="arg_z" placeholder="请输入整数或者浮点数">                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="coupon_term_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/coupon_term.js"></script>
+{% endblock %}

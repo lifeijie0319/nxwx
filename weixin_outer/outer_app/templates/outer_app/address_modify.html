@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改店铺地址</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/asset/jquery-weui.js"></script>
+    <script src="/static/outer_app/asset/city-picker.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/address_modify.js"></script>
+</head>
+<body ontouchstart>
+<input type="hidden" value="{{ region_tree }}" />
+<div class="container">
+    <div class="ys_panel">
+        <div class="ys_cell">
+            <div class="ys_cell_bd">当前地址</div>
+        </div>
+        <div class="list_brief">
+            <ul>
+                <li>{{ current_address }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="ys_cells">
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>省市区</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input class="ys_input" id="address_pcc" type="text" value="浙江省 湖州市 南浔区"/>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>街道/镇 -居委会/村</label>
+            </div>
+            <div class="ys_cell_bd" id="address_tv">
+                <input class="ys_input" type="text" value="南浔镇 夏家桥社区居委会"/>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>详细地址</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input id="address_detail" class="ys_input" type="text" placeholder="请输入详细地址">
+            </div>
+        </div>
+    </div>
+    <div class="ys_btns mt30">
+        <a id="submit" class="ys_btn" href="javascript:;">确定</a>
+    </div>
+</div>
+</body>
+</html>

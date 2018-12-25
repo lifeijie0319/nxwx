@@ -1,0 +1,12 @@
+{% for signin_rule in signin_rules %}
+<tr signin_rule_id="{{ signin_rule.id }}">
+    <td>{{ forloop.counter }}</td>
+    <td field="day">{{ signin_rule.day }}</td>
+    <td field="credits">{{ signin_rule.credits }}</td>
+    <td field="dec">{{ signin_rule.dec }}</td>
+    <td>
+        <input name="delete_signin_rule" type="button" class="btn btn-sm btn-danger" value="删除"/>
+        <input name="update_signin_rule" type="button" class="btn btn-sm btn-success" value="更新"/>
+    </td>
+</tr>
+{% endfor %}

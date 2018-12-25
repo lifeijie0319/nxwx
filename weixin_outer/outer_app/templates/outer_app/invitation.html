@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>邀请赚积分</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/invitation.js"></script>
+</head>
+<body ontouchstart style="background: #ff5e26;">
+    <div class="share" onclick="$(this).fadeOut();">
+        <div class="share_box">
+            点击右上角发送给指定朋友或分享到朋友圈 <i></i>
+        </div>
+    </div>
+    <div class="container">
+    	<div class="invitaion_banner">
+    		<img src="/static/outer_app/images/invitation/banner05.jpg">
+    	</div>
+	    <div class="invitation">
+	    	<div class="ys_loadmore ys_loadmore_line">
+	    	    <span class="ys_more_tips">累积赚取积分</span>
+	    	</div>
+	        <h2>{{ credits }}</h2>
+	        <p>已成功邀请<span class="invite_num">{{ num }}</span>人</p>
+	        <div class="invite_ranking">累计邀请人数排名</div>
+	        <div class="flex_grid">
+	        	<div class="ys_item_bd ys_bright">
+	        		<p>年排行: {% if year_rank == -1 %}--{% else %}第<span class="ranking_num">{{ year_rank }}</span>名{% endif %}</p>
+	        	</div>
+	        	<div class="ys_item_bd">
+	        		<p>月排行: {% if month_rank == -1 %}--{% else %}第<span class="ranking_num">{{ month_rank }}</span>名{% endif %}</p>
+	        	</div>
+	        </div>
+	    </div>
+	    <div class="ys_btns">
+	    	<a id="share_btn" class="ys_btn btn_yellow" href="javascript:;">立即分享给好友</a>
+	    </div>
+	    <div class="media">
+	    	<a class="media_item ys_item_media" href="{% url 'outer_app:staticfile' name='invitation_qrcode' %}">
+	    	    <div class="ys_item_hd">
+	    	        <img src="/static/outer_app/images/invitation/ici01.png">
+	    	    </div>
+	    	    <div class="ys_item_bd">
+	    	        <h5>获取注册邀请码</h5>
+	    	    </div>
+	    	</a>
+	    	<a class="media_item ys_item_media" href="{% url 'outer_app:staticfile' name='ranking' %}">
+	    	    <div class="ys_item_hd">
+	    	        <img src="/static/outer_app/images/invitation/ici02.png">
+	    	    </div>
+	    	    <div class="ys_item_bd">
+	    	        <h5>推广达人榜</h5>
+	    	    </div>
+	    	</a>
+	    </div>
+	    <div class="ys_panel invitation_panel">
+	    	<div class="panel_title">邀请规则</div>
+	        <div class="list_brief">
+	            <ul>
+	                <li>1. 邀请好友成功注册，您与好友均可获得{{ gift_credits }}积分。</li>
+	                <li>2. 丰收果积分可用于在指定商户的消费、抽奖等用途。</li>
+	                <li>3. 规则如有修改，以南浔银行最新公告为准，恕不另行通知。</li>
+	            </ul>
+	        </div>
+	    </div>
+    </div>
+</div>
+</body>
+</html>

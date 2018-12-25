@@ -1,0 +1,61 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">账户</th>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">身份证号</th>
+                            <th class="text-center">手机号</th>
+                            <th class="text-center">角色</th>
+                            <th class="text-center">二级角色</th>
+                            <th class="text-center">状态</th>
+                            <th class="text-center">支行</th>
+                            <th class="text-center">所属组</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for manager in managers %} 
+                        <tr manager_id="{{ manager.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="manager_account">{{ manager.account }}</td>
+                            <td field="manager_name">{{ manager.name }}</td>
+                            <td field="manager_idcardno">{{ manager.idcardno }}</td>
+                            <td field="manager_telno">{{ manager.telno }}</td>
+                            <td field="manager_role">{{ manager.role }}</td>
+                            <td field="manager_subrole">{{ manager.subrole }}</td>
+                            <td field="manager_status">{{ manager.get_status_display }}</td>
+                            <td field="manager_bankbranch">{{ manager.bankbranch }}</td>
+                            <td field="manager_group">
+                            {% for group in manager.groups.all %}
+                            {{ group.name }}|
+                            {% endfor %}
+                            </td>
+                            <td>
+                                <!--<input name="delete_manager" type="button" class="btn btn-sm btn-danger" value="删除"/>-->
+                                <input name="update_manager" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <input name="reset_password" type="button" class="btn btn-sm btn-success" value="重置密码"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if managers %}
+<ul class="pager">
+    {% if managers.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ managers.number }}页</li>
+    <li name="total_page">共{{ managers.paginator.num_pages }}页</li>
+    <li name="count">共{{ managers.paginator.count }}条数据</li>
+    {% if managers.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

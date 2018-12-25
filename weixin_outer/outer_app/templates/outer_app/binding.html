@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绑定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/tools.js?v=20181026"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/binding.js"></script>
+</head>
+<body ontouchstart style="background-color: #fff">
+	<div class="container">
+        <form id="binding_form">
+            <div class="reg">
+                <div class="reg_logo">
+                    <img src="/static/outer_app/images/logo.png" height="35">
+                </div>
+                <div class="reg_title">实名信息</div>
+                <div class="form-material floating">
+                    <input class="form-control" type="text" id="user_name" name="user_name" value="{{ name }}" emptyTips="姓名不能为空" required>
+                    <label for="user_name">用户名</label>
+                    <a class="modify" href="javascript:;">修改</a>
+                </div>
+                <div class="form-material floating">
+                    <input class="form-control" type="text" id="user_id" name="user_id" maxlength="18" value="{{ idcardno }}" pattern="(^\d{18}$)|(^\d{17}(\d|X|x)$)" emptyTips="身份证号码不能为空" notMatchTips="请输入正确的18位身份证号码">
+                    <label for="user_id">身份证</label>
+                    <a class="modify" href="javascript:;">修改</a>
+                </div>
+                <div class="form-material floating">
+                    <input class="form-control" type="tel" id="user_tel" name="user_tel" value="{{ telno }}" maxlength="11" pattern="^[0-9]{11}$" emptyTips="手机号不能为空" notMatchTips="请输入正确的手机号" required>
+                    <label for="user_tel">手机号</label>
+                    <a class="modify open-popup" href="javascript:;" data-target="#clause-a">修改</a>
+                </div>
+                <a id="binding" class="ys_btn mt30" href="javascript:;">绑定</a>
+            </div>
+        </form>
+        <div id="clause-a" class="ys_page">
+            <div class="ys_content ys_page_x">
+                <form id="telno_modify_form">
+                    <div class="ys_cells">
+                        <div class="ys_cell">
+                            <div class="ys_cell_hd">
+                                <label>手机号</label>
+                            </div>
+                            <div class="ys_cell_bd">
+                                <input name="telephone_no" class="ys_input" type="tel" maxlength="11" placeholder="请输入手机号" placeholder="请输入手机号" pattern="^[0-9]{11}$" emptyTips="手机号不能为空" notMatchTips="请输入正确的手机号" required>
+                            </div>
+                        </div>
+                        <div class="ys_cell ys_cell_vcode">
+                            <div class="ys_cell_hd">
+                                <label>验证码</label>
+                            </div>
+                            <div class="ys_cell_bd">
+                                <input name="vcode" class="ys_input" type="text" type="number" placeholder="请输入手机验证码" pattern="^[0-9]{6}$" emptyTips="验证码不能为空" notMatchTips="验证码格式不正确" required>
+                            </div>
+                            <div class="ys_cell_ft">
+                                <a id="send_vcode" class="ys_input_btn" href="javascript:;">获取验证码</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ys_btns mt30">
+                        <a id="telno_modify_submit" class="ys_btn" href="javascript:;">确定</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

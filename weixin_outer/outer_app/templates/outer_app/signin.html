@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>签到</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/signin.js?v=20180113"></script>
+</head>
+<body ontouchstart style="background-color: #ff5a46;">
+    <div id="req_token" style="display:none">{{ req_token }}</div>
+	<div class="container">
+        <div class="signin">
+            <div class="signin_banner">
+                <div class="signin_mycoin" id="my_credits">我的积分：{{ credits }}</div>
+                <img src="/static/outer_app/images/signin_coins.png" alt="">
+                <p>签到得积分</p>
+                <a class="signin_btn" id="js-just-qiandao">立即签到</a>
+            </div>
+            <div class="signin_wrapper">
+                <div class="signin_calendar">
+                    <div class="signin_calendar_top">
+                        <div class="signin_date current-date"></div>
+                        <a class="signin_history" id="js-qiandao-history">我的签到</a>
+                    </div>
+                    <div class="signin_calendar_body">
+                        <div class="flex_grid">
+                            <div class="flex_grow">日</div>
+                            <div class="flex_grow">一</div>
+                            <div class="flex_grow">二</div>
+                            <div class="flex_grow">三</div>
+                            <div class="flex_grow">四</div>
+                            <div class="flex_grow">五</div>
+                            <div class="flex_grow">六</div>
+                        </div>
+                        <ul class="signin_calendar_days" id="js-qiandao-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="qiandao-layer qiandao-history-layer">
+                <div class="qiandao-layer-con">
+                    <a href="javascript:;" class="close-qiandao-layer"></a>
+                    <ul class="qiandao-history-inf">
+                        <!--<li>
+                            <p >连续签到</p>
+                            <h4 id='sign_ll'>5</h4>
+                        </li>-->
+                        <li>
+                            <p >本月签到</p>
+                            <h4 id="all_sign"></h4>
+                        </li>
+                        <li>
+                            <p >签到累计奖励</p>
+                            <h4 id="all_sign_points"></h4>
+                        </li>
+                    </ul>
+                </div>
+                <div class="qiandao-layer-bg"></div>
+            </div>
+            <div class="qiandao-layer qiandao-active">
+                <div class="qiandao-layer-con">
+                    <a href="javascript:;" class="close-qiandao-layer"></a>
+                    <img src="/static/outer_app/images/signin_get.png" width="150">
+                    <p id="credits_added" class="coins_add"></p>
+                    <p>累计签到可获得额外积分哦</p>
+                </div>
+            </div>
+        </div>
+        <div class="signin_belief ">
+            <div class="belief_title">签到规则</div>
+            <div class="sb_t">当月累计签到赠送额外积分：</div>
+            <div class="sb_list">
+                <ul>
+                    {% for sign_rule in sign_rules %}
+                    <li>· 累计{{ sign_rule.day }}天，额外赠送{{ sign_rule.credits }}积分</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div style="height: 15px;"></div>
+	</div>
+</body>
+</html>

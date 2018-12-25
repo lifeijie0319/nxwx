@@ -1,0 +1,74 @@
+/*皮肤蓝色*/
+
+/*侧边栏样式*/
+.nav-main .nav-main-heading{
+	color: #646464;
+}
+.nav-main a{
+	color: #646464;
+}
+.nav-main a>i{
+	color: #646464;
+}
+.nav-main a.active{
+	color: #417ecb;
+	font-weight: 600;
+}
+.nav-main a.active:hover{
+	color: #2699e8;
+}
+.nav-main a.nav-submenu:before{
+	color: #54667a;
+}
+.nav-main a.nav-submenu:hover:before{
+	color: #fff;
+}
+
+.nav-main li.open>a.nav-submenu{
+	color: #fff;
+	background: #5c90d2;
+}
+.nav-main li.open>a.nav-submenu:before{
+	color: #fff;
+}
+.nav-main li.open>a.nav-submenu>i{
+	color: #fff;
+}
+.nav-main a.nav-submenu:hover{
+	color: #fff;
+	background: #5c90d2;
+}
+.nav-main a.nav-submenu:hover>i{
+	color: #fff;
+}
+.nav-main ul{
+	background-color: #fff;
+}
+.nav-main ul a{
+	color: #646464;
+}
+.nav-main ul a:hover,
+.nav-main ul a:focus{
+	color: #417ecb;
+}
+
+
+/*顶部栏*/
+.navbar_blue{
+ background-color: #3d78c3!important;
+}
+.side-header.navbar_blue{
+	color: #fff;
+}
+
+
+.table-header-bg>thead>tr>th, .table-header-bg>thead>tr>td {
+  background-color: #5c90d2;
+  border-bottom-color: #5c90d2
+}
+tr.th-color-opcity th{
+	background-color: #3b70b4!important;
+}
+tr.th-color-opcity.th-darkgreen th{
+	background-color: #255898!important;
+}

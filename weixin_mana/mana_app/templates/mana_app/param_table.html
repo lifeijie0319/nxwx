@@ -1,0 +1,11 @@
+{% for param in params %}
+<tr param_id="{{ param.id }}">
+    <td>{{ forloop.counter }}</td>
+    <td field="name">{{ param.name }}</td>
+    <td field="value">{{ param.value }}</td>
+    <td field="remark">{{ param.remark }}</td>
+    <td>
+        <input name="update_param" type="button" class="btn btn-sm btn-success" value="更新"/>
+    </td>
+</tr>
+{% endfor %}

@@ -1,0 +1,84 @@
+{% load cus_filters %}
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="1">对账时间</th>
+                            <th class="text-center" data-priority="2">交易者名称</th>
+                            <th class="text-center" data-priority="2">交易者身份证号</th>
+                            <th class="text-center" data-priority="2">交易时间</th>
+                            <th class="text-center" data-priority="2">交易类型</th>
+                            <th class="text-center" data-priority="2">交易积分</th>
+                            <th class="text-center" data-priority="2">交易方向</th>
+                            <th class="text-center" data-priority="2">交易商品名称</th>
+                            <th class="text-center" data-priority="2">交易商品积分价值</th>
+                            <th class="text-center" data-priority="2">交易流水号</th>
+                            <th class="text-center" data-priority="1">状态</th>
+                            <th class="text-center" data-priority="1">补录操作人员</th>
+                            <th class="text-center" data-priority="1">补录时间</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reconciliation_amendment in reconciliation_amendments %}
+                        <tr reconciliation_amendment_id="{{ reconciliation_amendment.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="reconciliation_log">{{ reconciliation_amendment.reconciliation_log.opt_datetime|date:"Y-m-d H:i:s" }}</td>
+
+                            <td field="trader_name">{{ reconciliation_amendment.transaction_detail.trader.name }}</td>
+                            <td field="trader_id">{{ reconciliation_amendment.transaction_detail.trader.user.idcardno }}</td>
+                            <td field="trade_time">{{ reconciliation_amendment.transaction_detail.trade_datetime|date:"Y-m-d H:i:s" }}</td>
+                            <td field="trade_type">{{ reconciliation_amendment.transaction_detail.type }}</td>
+                            {% if reconciliation_amendment.transaction_detail.credits >= 0%}
+                            <td field="trade_credits">{{ reconciliation_amendment.transaction_detail.credits }}</td>
+                            <td field="trade_direction">+</td>
+                            {% else %}
+                            <td field="trade_credits">{{ reconciliation_amendment.transaction_detail.credits|invert }}</td>
+                            <td field="trade_direction">-</td>
+                            {% endif %}                            {% if reconciliation_amendment.transaction_detail.coupon %}
+                            <td field="trade_goods_name">{{ reconciliation_amendment.transaction_detail.coupon.name }}</td>
+                            <td field="trade_goods_cost">{{ reconciliation_amendment.transaction_detail.coupon.credits }}</td>
+                            {% else %}
+                            <td field="trade_goods_name">无</td>                            <td field="trade_goods_cost">无</td>
+                            {% endif %}
+                            <td field="trade_orderno">{{ reconciliation_amendment.transaction_detail.orderno }}</td>
+                            <td field="status">{{ reconciliation_amendment.status }}</td>
+                            {% if reconciliation_amendment.reconciliation_amendment %}
+                            <td field="reconciliation_amendment">{{ reconciliation_amendment.reconciliation_amendment.name }}</td>
+                            {% else %}
+                            <td field="reconciliation_amendment">无</td>
+                            {% endif %}
+                            {% if reconciliation_amendment.amend_datetime %}
+                            <td field="reconciliation_amendment">{{ reconciliation_amendment.amend_datetime|date:"Y-m-d H:i:s" }}</td>
+                            {% else %}
+                            <td field="reconciliation_amendment">无</td>
+                            {% endif %}
+                            <td>
+                                {% if reconciliation_amendment.status == '未补录' %}
+                                <input name="update_reconciliation_amendment" type="button" class="btn btn-sm btn-success" value="手动
+                        补录"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if reconciliation_amendments %}
+<ul class="pager">
+    {% if reconciliation_amendments.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ reconciliation_amendments.number }}页</li>
+    <li name="total_page">共{{ reconciliation_amendments.paginator.num_pages }}页</li>
+    <li name="count">共{{ reconciliation_amendments.paginator.count }}条数据</li>
+    {% if reconciliation_amendments.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

@@ -1,0 +1,83 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="manager_name" placeholder="请填写要查询的用户名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-date_setting">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_date_setting_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#date_setting_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">预约日期管理</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="date_setting_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        添加日期
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="date_setting_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="date"> 节假日日期<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date"  name="date"  >
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="col-md-4 control-label" for="dec">节假日描述 </label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="dec" placeholder="请输入描述"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="date_setting_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/reservation_date_setting.js"></script>
+{% endblock %}

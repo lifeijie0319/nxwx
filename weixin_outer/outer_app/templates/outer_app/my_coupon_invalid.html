@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的票券</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+		<div id="my_coupon_invalid_list" class="ys_panel ticket_item">
+            {% for user_coupon in used_coupons %}
+            <a class="ys_item_media" href="{% url 'outer_app:coupon_use_invalid_page' %}?user_coupon_id={{ user_coupon.user_coupon_id }}">
+                <div class="ys_item_hd disabled">
+                    {% if user_coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+                </div>
+                <div class="ys_item_bd">
+                    <h4>{{ user_coupon.coupon_name }}</h4>
+                    <div class="timer">
+                        <p><span>积分商城兑换所得</span></p>
+                    </div>
+                </div>
+                <div class="ys_item_ft timg_used">
+                    <img src="/static/outer_app/images/yused.png">
+                </div>
+            </a>
+            {% endfor %}
+            {% for user_coupon in expired_coupons %}
+            <a class="ys_item_media" href="{% url 'outer_app:coupon_use_invalid_page' %}?user_coupon_id={{ user_coupon.user_coupon_id }}">
+                <div class="ys_item_hd disabled">
+                    <img src="/static/outer_app/images/coupon_dy.png" alt="">
+                </div>
+                <div class="ys_item_bd">
+                    <h4>{{ user_coupon.coupon_name }}</h4>
+                    <div class="timer">
+                        <p><span>积分商城兑换所得</span></p>
+                    </div>
+                </div>
+                <div class="ys_item_ft toverdue">
+                    <img src="/static/outer_app/images/yoverdue.png">
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="nomore">没有更多了</div>
+        <div id="credits_history_empty" class="ys_loadmore ys_loadmore_line" style="display:none">
+            <span class="ys_more_tips">暂无数据</span>
+        </div>
+	</div>
+    <script>
+        $(function(){
+            if($('#my_coupon_invalid_list > a.ys_item_media').length == 0){
+                $('#my_coupon_invalid_list').hide();
+                $('.nomore').hide();
+                $('#credits_history_empty').show();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% for item in items %}
+<div class="item_item ys_panel panel1">
+    <div class="ys_cell">
+        <div class="ys_cell_bd">流水号：{{ item.listno }}</div>
+        <div class="ys_cell_ft color_primary">{{ item.status }}</div>
+    </div>
+    <div class="pay_ph_bd">
+        <div class="pay_ph_item">
+            <label>取号时间：</label>
+            <span>{{ item.created_dtime }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>取号网点：</label>
+            <span>{{ item.branch_name }}</span>
+        </div>
+    </div>
+</div>
+{% endfor %}

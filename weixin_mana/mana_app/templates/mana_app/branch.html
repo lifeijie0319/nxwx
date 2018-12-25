@@ -1,0 +1,186 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">机构名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="branch_name" placeholder="请填写要查询的机构名称">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-branch">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_branch_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#branch_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">银行录入管理</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="branch_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        添加日期
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="branch_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="deptno">银行机构号 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="deptno" placeholder="输入数字编号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="name">银行名称 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="name" placeholder="输入银行名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="level">等级</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="level">
+                                    {% for level in levels %}
+                                    <option value="{{ level.0 }}">{{ level.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="address">地址 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="address" placeholder="输入银行地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="parent">从属支行</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="parent">
+                                    <option value="0">无</td>
+                                    {% for branch in branches %}
+                                    <option value="{{ branch.id }}">{{ branch.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="latitude">银行坐标纬度 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="latitude"  placeholder="输入浮点数，小数点后必须满6位">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="longitude">银行坐标经度 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="longitude" placeholder="输入浮点数，小数点后必须满6位">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="officehours">银行营业时间</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="officehours" placeholder="输入银行营业时间">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="telno">网点联系电话</label></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="telno" placeholder="请输入网点联系电话"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_map">是否允许调用取号机 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_map" >
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_loan">是否允许贷款预约 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_loan" >
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_oppen_account">是否允许开户预约 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_oppen_account" >
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_withdrawal">是否允许取现预约 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_withdrawal" >
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_etc">是否允许ETC预约<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_etc" >
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="is_dgkh">是否允许对公开户预约<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="is_dgkh">
+                                    <option value="True">是</option>
+                                    <option value="False">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary"  type="button" id="branch_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/branch.js?v=1"></script>
+{% endblock %}

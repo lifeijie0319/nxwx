@@ -1,0 +1,205 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">状态</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="status">
+                            <option value=""></option>
+                            <option value="使用中">使用中</option>
+                            <option value="未使用">未使用</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-minw btn-success" type="button" id="query_btn">查询
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i
+                            class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <h3 class="block-title">公众号字段回复活动配置</h3>
+            <div class="block-options-simple">
+                <button id="add_btn" class="btn btn-minw btn-warning" data-toggle="modal"
+                        data-target="#modal"><i class="fa fa-plus"></i> 新增
+                </button>
+            </div>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        新增活动配置
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="name">活动名称
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" id="name" name="name" maxlength="16">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="description">活动描述</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" id="description" name="description">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">活动类型
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="typ">
+                                    {% for activity_type in activity_types %}
+                                    <option value="{{ activity_type.0 }}">{{ activity_type.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="key">客户输入字段
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" id="key" name="key" maxlength="10">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+    <!-- EXT TABLE Modal -->
+    <div class="modal fade" id="ext_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        活动扩展信息
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <ul id="ext_tab" class="nav nav-tabs">
+                        <li class="active"><a href="#ext_table_area" data-toggle="tab">查看</a></li>
+                        <li><a href="#ext_add_form" data-toggle="tab">新增</a></li>
+                    </ul>
+                    <div class="tab-content" style="padding: 15px 0 0">
+                        <div class="tab-pane fade active in" id="ext_table_area"></div>
+                        <div class="tab-pane fade" id="ext_add_form">
+                            <form class="js-validation-bootstrap form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">名称
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="name">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">内容
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="value" maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        备注
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="remark" maxlength="10">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-primary" style="display: none" type="button" name="ext_add_btn">增加</button>
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- EXT TABLE Modal -->
+    <!-- UPLOAD Modal -->
+    <div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        活动图片上传
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">原图片</label>
+                            <div class="col-md-7">
+                                <img name="origin" src="" class="img-responsive center-block">
+                            </div>
+                        </div>
+                        <input type="hidden" name="activity_id">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="img">图片选择</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="file" name="img" accept="image/*" placeholder="请选择一张图片" multiple="multiple">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">新图片</label>
+                            <div class="col-md-7">
+                                <img name="preview" src="" class="img-responsive center-block">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-minw btn-primary" name="submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END UPLOAD Modal -->
+</div>
+
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/activity.js"></script>
+{% endblock %}

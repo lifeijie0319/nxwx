@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>幸运大抽奖</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/asset/awardRotate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script>
+    	//不同宽度的设备，使其html的font-size值都为设备宽度/10px
+    	(function() {
+    	    var newRem = function() {
+    	        var html = document.documentElement;
+    	        html.style.fontSize = html.getBoundingClientRect().width / 10 + 'px';
+    	    };
+    	    window.addEventListener('resize', newRem, false);
+    	    newRem();
+    	})();
+    </script>
+    <script src="/static/outer_app/js/lottery.js?v=20180113"></script>
+</head>
+<body ontouchstart style="background:#f2d84d;">
+    <div id="req_token" style="display:none">{{ req_token }}</div>
+	<div class="container">
+        <div class="lottery_banner"></div>
+        <div class="my_lottery" id="my_lottery">我的积分：<span>{{ credits }}</span></div>
+        <div class="lottery_coins">
+            {{ cost }}积分抽一次
+        </div>
+		<div class="lottary">
+			<img src="/static/outer_app/images/credits.png" id="shan-img" style="display:none;" />
+			<img src="/static/outer_app/images/sorry.png" id="sorry-img" style="display:none;" />
+			<div class="banner">
+			    <div class="turnplate" style="background-image:url(/static/outer_app/images/turnplate-bg.png);background-size:100% 100%;">
+			        <canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+			        <img class="hand" src="/static/outer_app/images/hand.png"/>
+			        <a class="pointer">
+			            <img src="/static/outer_app/images/turnplate.png"/>
+			        </a>
+			    </div>
+			</div>
+		</div>
+        <div class="ys_btns flex_grid lottery_list">
+            <div class="flex_grow">
+                <a class="ys_btn" href="{% url 'outer_app:lottery_details' %}">我的奖品</a>
+            </div>
+        </div>
+        <div class="ys_panel lottery_belief">
+            <div class="lottery_brief_t">抽奖规则</div>
+            <div class="list_brief">
+                <ul>
+                {%for i in desc%}
+                    <li>{{i}}</li>
+                {%endfor%}
+                    <!-- <li>1、绑定客户可参与抽奖</li>
+                    <li>2、每次抽奖客户投入{{ cost }}积分作为成本</li>
+                    <li>3、如果抽奖获得积分，积分即时到账，可以在交易明细界面查看详情</li>
+                    <li>4、如果抽奖获得实物奖品，银行会定期按照您填写的收货地址发送奖品</li> -->
+                </ul>
+            </div>
+        </div>
+		<div class="wow_popup">
+		    <div class="wow_popup_container">
+		        <a href="javascript:;" class="popup_close"></a>
+		        <p class="lottery_title">中奖啦！恭喜您获得</p>
+		        <p class="lottery_txt"></p>
+		        <a class="lottery_check" href="{% url 'outer_app:lottery_details' %}">查看</a>
+		    </div>
+		</div>
+		<div class="sorry_popup">
+		    <div class="sorry_popup_container">
+		        <a href="javascript:;" class="popup_close"></a>
+		        <img class="sorry_popup_img" src="/static/outer_app/images/sorryman.png"/>
+		        <p class="lottery_title">好可惜，差点就中了</p>
+		        <p class="lottery_txt">继续加油哦~</p>
+		        <a class="lottery_check" href="javascript:;">确定</a>
+		    </div>
+		</div>
+        <div class="loadEffect">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+</html>

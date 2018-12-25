@@ -1,0 +1,16 @@
+
+                        {% for lottery_award in lottery_awards %}
+                        <tr lottery_award_id="{{ lottery_award.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field='coupon'>{{lottery_award.coupon.name}}</td>
+                            <td field='busitype'>{{lottery_award.busitype.name}}</td>
+                            <td field='l_num'>{{lottery_award.l_num}}</td>
+                            <td field='l_time'>{{lottery_award.l_time}}</td>
+                            <td field='h_num'>{{lottery_award.h_num}}</td>
+                            <td field='h_time'>{{lottery_award.h_time}}</td>
+                            <td>
+                                <input name="delete_lottery_award" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_lottery_award" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                        {% endfor%}

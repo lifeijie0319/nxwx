@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/tools.js?v=20181026"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/register.js?v=20180126"></script>
+</head>
+<body ontouchstart style="background-color: #fff">
+	<div class="container">
+        <form id="form">
+            <div class="reg">
+                <div class="reg_logo">
+                    <img src="/static/outer_app/images/logo.png" height="35">
+                </div>
+                <div class="reg_title">实名信息</div>
+                <div class="form-material floating">
+                    <input class="form-control" type="text" id="user_name" name="user_name" emptyTips="姓名不能为空" required>
+                    <label for="user_name">用户名</label>
+                </div>
+                <div class="form-material floating">
+                    <input class="form-control" type="text" id="user_id" name="user_id" maxlength="18" pattern="(^\d{18}$)|(^\d{17}(\d|X|x)$)" emptyTips="身份证号码不能为空" notMatchTips="请输入正确的18位身份证号码" required>
+                    <label for="user_id">身份证</label>
+                </div>
+                <div class="form-material floating">
+                    <input class="form-control" type="tel" id="user_tel" name="user_tel" maxlength="11" pattern="^[0-9]{11}$" emptyTips="手机号不能为空" notMatchTips="请输入正确的手机号" required>
+                    <label for="user_tel">手机号</label>
+                    <a id="send_vcode" class="telcode" href="javascript:;">获取验证码</a>
+                </div>
+                <div class="form-material floating" style="margin-bottom: 15px">
+                    <input class="form-control" type="number" id="user_vcode" name="user_vcode" pattern="[0-9]{6}" emptyTips="验证码不能为空" notMatchTips="验证码格式不正确" required>
+                    <label for="user_vcode">手机验证码</label>
+                </div>
+                <!--
+                <label for="agreement" class="ys_agree">
+                    <input class="ys_agree_checkbox" id="agreement" type="checkbox" checked emptyTips="没有同意协议，无法继续注册" required>
+                    <span class="ys_agree_text">阅读并同意</span>
+                </label>
+                <a class="ys_agree_clause open-popup" href="javascript:;" data-target="#clause-a">《相关条款》</a>
+                -->
+                <a id="submit" class="ys_btn mt30" href="javascript:;">下一步</a>
+            </div>
+        </form>
+        <!--
+        <div id="clause-a" class="ys_page">
+            <div class="ys_content ys_page_y">
+                <div class="ys_btns">
+                    <div class="clause_content">
+                        <h4>南浔银行微信公众号使用条款</h4>
+                        <p id="protocol"></p>
+                    </div>
+                    <div class="pb60"></div>
+                </div>
+            </div>
+            <div class="ys_fixed_footer clause_btn">
+                <a class="ys_fixed_btn close-popup" href="javascript:;">继续</a>
+            </div>
+        </div>
+        -->
+
+	</div>
+</body>
+</html>

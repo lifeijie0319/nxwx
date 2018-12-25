@@ -1,0 +1,132 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+{% load cus_filters %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">状态</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="status">
+                            {% for status in statuses %}
+                            <option value="{{ status.0 }}">{{ status.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-reconciliation_log">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="auto_amend_btn" class="btn btn-minw btn-warning">批量自动补录</button>
+            </div>
+            <h3 class="block-title">对账补录</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reconciliation_amendment_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        手动补录
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="reconciliation_amendment_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trader_name">交易者名称<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trader_name" placeholder="请输入交易者名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trader_id"> 交易者身份证号<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trader_id" placeholder="请输入交易者身份证号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_time">交易时间<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_time" placeholder="请输入交易时间">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_type">交易类型 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="trade_type">
+                                    {% for trade_type in trade_types %}
+                                    <option value="{{ trade_type.0 }}">{{ trade_type.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_credits">交易积分 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_credits">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_direction">交易方向<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_direction">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_goods_name">交易商品名称</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_goods_name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_goods_cost">交易商品积分价值</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_goods_cost">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="trade_orderno">交易流水号<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="trade_orderno">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="reconciliation_amendment_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/reconciliation_amendment.js"></script>
+{% endblock %}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>票券详情</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/reconnecting-websocket.min.js"></script>
+    <script src="/static/outer_app/asset/qrcode.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/my_coupon_use.js?v=20180113"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+		<div class="commodity_item ys_panel" style="background-color: #fff;">
+		    <a class="ys_item_media" href="javascript:;">
+		        <div class="ys_item_hd">
+                    {% if coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+		        </div>
+		        <div class="ys_item_bd">
+		            <p>{{ coupon.name }}</p>
+		            <div class="commodity_num">
+		                <h2><span>{{ coupon.credits }}</span> 积分</h2>
+		                <p class="commodity_num_p">x<span>1</span></p>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+        <div class="mcd_qrcode ys_cells">
+            <div class="ys_cell">
+                <div class="ys_cell_bd">
+                    <div class="ys_cell_title mcd_qrcode_title">领取码</div>
+                    <div class="ys_cell_label mcd_qrcode_brief">领取商品时请将该取票码出示给商家</div>
+                </div>
+            </div>
+            <div class="mcd_qrcode_content">
+                <div id="qrcode" class="mcd_qrcode_img"></div>
+            </div>
+        </div>
+		<div class="ys_panel">
+		    <div class="ys_cell" href="javascript:;">
+		        <div class="ys_cell_bd">实付金额</div>
+		        <div class="ys_cell_ft mcd_coins">{{ coupon.credits }}积分</div>
+		    </div>
+		    <div class="mcd_info">
+		        <div class="mcd_list_brief">
+		            <label>获得方式：</label>
+		            <span>积分商城兑换所得</span>
+		        </div>
+		        <div class="mcd_list_brief">
+		            <label>有效期：</label>
+		            <span>{{ coupon.expired_date }}</span>
+		        </div>
+		        <div class="mcd_list_brief">
+		            <label>订单号</label>
+		            <span>{{ coupon.orderno }}</span>
+		        </div>
+		    </div>
+		</div>
+        {% for shop in shops %}
+		<div class="ys_panel ys_item_media seller_info">
+		    <div class="ys_cell_bd">
+		        <div class="mcd_shop_name">{{ shop.name }}</div>
+		        <div class="mcd_adress">{{ shop.address }}</div>
+		    </div>
+		    <div class="ys_cell_ft">
+		        <a class="mcd_shop_tel" href="tel:{{ shop.seller_telno }}">
+		            <img src="/static/outer_app/images/tel.png" alt="">
+		        </a>
+		    </div>
+		</div>
+        {% endfor %}
+		<div class="ys_panel">
+		    <div class="ys_cell">
+		        <div class="ys_cell_bd">兑换须知</div>
+		    </div>
+		    <div class="list_brief">
+		        <ul>
+		            <li>1、顾客购买商品后自动生成取件二维码</li>
+		            <li>2、购买成功后将不予退换</li>
+		            <li>3、取件码可在我购买的商品中查看</li>
+		            <li>4、顾客凭取件码或二维码在购买的实体店中予以换购商品</li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="pb15"></div>
+	</div>
+</body>
+</html>

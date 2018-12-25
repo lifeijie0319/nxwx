@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>快抵贷预约</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css?v=20180309" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css?v=20180309" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/asset/jquery.autocomplete.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/reservation_kdd.js?v=20180309"></script>
+</head>
+<body ontouchstart style="background-color: #9bc94f">
+<div class="container">
+    <div class="invitaion_banner">
+        <img src="/static/outer_app/images/reservation/banner04.jpg?v=20180312">
+    </div>
+    <form id="form_kdd1">
+        <input type="hidden" name="req_token" value="{{ req_token }}">
+        <div class="title_loan"><span style="background-color: #84B533">贷款申请资料</span></div>
+        <div class="cell_loan cell_loan_order">
+            <div class="ys_cells">
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label style="min-width:120px;">企业(客户)名称</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" type="text" name="orgname" placeholder="请输入（客户）企业名称" emptyTips="企业（客户）名称不能为空" required>
+                    </div>
+                </div>
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label style="min-width:120px;">房屋性质</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="house_property">
+                            <option value="0" selected>请选择房屋性质</option>
+                            {% for house_property in house_properties %}
+                            <option value="{{ house_property }}">{{ house_property }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label style="min-width:120px;">房屋坐落地址</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="house_region">
+                            <option value="0" selected>请选择房屋坐落地址</option>
+                            {% for house_region in house_regions %}
+                            <option value="{{ house_region }}">{{ house_region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <!--
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label>选择网点</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="branch">
+                            <option value="0" selected>请选择网点</option>
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+        <div class="ys_btns loan_nextbtn">
+            <a class="ys_btn" href="javascript:;" id="kdd_submit1" >下一步</a>
+        </div>
+    </form>
+    <div id="page_kdd2" class="ys_page">
+        <div class="ys_content ys_page_x" style="background-color: #cced96">
+            <form id="form_kdd2">
+                <div class="cell_loan">
+                    <div class="ys_cells">
+                        <div class="ys_cell">
+                            <div class="ys_cell_hd">
+                                <label id="location_label">房屋地址</label>
+                            </div>
+                            <div class="ys_cell_bd" style="position: relative;">
+                                <input class="ys_input" type="search" name="house_location" placeholder="小区名称（房屋地址）的关键字">
+                            </div>
+                        </div>
+                        <div class="ys_cell">
+                            <div class="ys_cell_hd">
+                                <label>房屋面积</label>
+                            </div>
+                            <div class="ys_cell_bd">
+                                <input class="ys_input" type="number" name="house_area" placeholder="房屋建筑面积（平方米）" emptyTips="房屋面积不能为空" required>       
+                            </div>
+                        </div>
+                        <label class="ys_cell ys_cell_checkbox" for="is_villa" id="is_villa_switch">
+                            <div class="ys_cell_bd">别墅、排屋</div>
+                            <div class="ys_cell_ft">
+                                <input class="ys_checkbox" id="is_villa" type="checkbox" name="is_villa">
+                                <i class="iconfont icon-c-radio-none"></i>
+                            </div>
+                        </label>
+                        <div class="ys_cell ys_cell_select">
+                            <div class="ys_cell_hd">
+                                <label>选择网点</label>
+                            </div>
+                            <div class="ys_cell_bd">
+                                <select class="ys_select" name="branch">
+                                    <option value="0" selected>请选择网点</option>
+                                    {% for bank in banks %}
+                                    <option value="{{ bank.id }}">{{ bank.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clause">
+                    <h4>注意事项</h4>
+                    <p>1、请您在小区名称一栏输入您可以提供抵押的房产名称，通过关键字进行查询，凡通过本系统可以查询到的房产信息，均可生成预估可贷额度。</p>
+                    <p>2、预估可贷额度是对您提供抵押物的大致评估，仍需考虑您所提供抵押物的户型、位置、装修状况等情况，具体以最终签约授信额度为准。</p>
+                    <p>3、无法查询到抵押房产信息的，您可自行输入地址后进行提交。</p>
+                    <p>4、若您所提供的抵押物为别墅、排屋类型的，请勾选相应选项。</p>
+                </div>
+                <div class="flex_grow"></div>
+                <div class="ys_btns flex_grid">
+                    <div class="flex_grow">
+                        <a class="ys_btn" href="javascript:;" id="kdd_submit2" >下一步</a>
+                    </div>
+                    <div style="width: 15px;"></div>
+                    <div class="flex_grow">
+                        <a class="ys_btn ys_plain_btn_default close-popup" href="javascript:;">返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

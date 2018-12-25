@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>积分优惠</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/swipe.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/promotion.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+		<div class="swipe" id="slide">
+		    <ul>
+		        <li>
+		            <a href="#">
+		                <img src="/static/outer_app/images/loading_fail.png" id="carousel_img1" alt="">
+		            </a>
+		        </li>
+		        <li>
+		            <a href="#">
+		                <img src="/static/outer_app/images/loading_fail.png" id="carousel_img2" alt="">
+		            </a>
+		        </li>
+		        <li>
+		            <a href="#">
+		                <img src="/static/outer_app/images/loading_fail.png" id="carousel_img3" alt="">
+		            </a>
+		        </li>
+		    </ul>
+		    <div class="dot">
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		    </div>
+		</div>
+		<div class="my_credits ys_flex">
+			<div class="ys_cell_hd">我的积分</div>
+			<div class="ys_cell_bd" id="credits">{{ user.credits }}</div>
+		</div>
+
+        <div class="ys_panel promotion_all">
+        	<a class="ys_cell" href="{% url 'outer_app:promotion_all_page' %}">
+        	    <div class="ys_cell_bd">热门兑换</div>
+        	    <div class="ys_cell_ft">全部</div>
+        	</a>
+            {% for coupon in coupons %}
+            <a class="ys_item_media" href="{% url 'outer_app:promotion_details_page' %}?id={{ coupon.id }}">
+                <div class="ys_item_hd">
+                    {% if coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+                </div>
+                <div class="ys_item_bd">
+                    <p class="ys_item_p promotion_itemTitle">{{ coupon.name }}</p>
+                    <p>{{ coupon.credits }}积分</p>
+                </div>
+                <div class="ys_item_ft">兑换</div>
+            </a>
+            {% endfor %}
+        </div>
+        <!--
+	    <div class="clearfix">
+            {% for coupon in coupons %}
+	    	<a class="pitem_grid" href="{% url 'outer_app:promotion_details_page' %}?id={{ coupon.id }}">
+	    		<div class="info_wrap">
+	    			<h3>{{ coupon.name }}</h3>
+	    			<p><span>{{ coupon.credits }}</span>积分</p>
+	    		</div>
+	    		<div class="img_wrap">
+                    {% if coupon.discount_type == '满减' %}
+	    			<img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+	    		</div>
+	    	</a>
+            {% endfor %}
+	    </div>
+        -->
+    </div>
+<script>
+    $('img').on('error', function(){
+        $(this).attr('src', '/static/outer_app/images/loading_fail.png');
+    });
+    $('#carousel_img1').attr('src', '/outer_app/media/carousel_figure/promotion01.jpg?v=' + Math.random());
+    $('#carousel_img2').attr('src', '/outer_app/media/carousel_figure/promotion02.jpg?v=' + Math.random());
+    $('#carousel_img3').attr('src', '/outer_app/media/carousel_figure/promotion03.jpg?v=' + Math.random());
+</script>
+</body>
+</html>

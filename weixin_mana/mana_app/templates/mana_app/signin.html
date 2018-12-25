@@ -1,0 +1,120 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<!--
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="sign_name" placeholder="请填写要查询的用户名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-signin_rule">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+-->
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_signin_rule_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#signin_rule_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">签到管理</h3>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">签到天数</th>
+                            <th class="text-center">赠送积分数额</th>
+                            <th class="text-center">备注</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for signin_rule in signin_rules %}
+                        <tr signin_rule_id="{{ signin_rule.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="day">{{ signin_rule.day }}</td>
+                            <td field="credits">{{ signin_rule.credits }}</td>
+                            <td field="dec">{{ signin_rule.dec }}</td>
+                            <td>
+                                <input name="delete_signin_rule" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_signin_rule" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signin_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        添加日期
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="signin_rule_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="day">签到天数 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="day" placeholder="请输入31以内的正整数">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="credits"> 赠送积分数额<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="credits" placeholder="请输入整数">
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="col-md-4 control-label" for="dec">备注 </label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="dec" placeholder="请输入备注"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="signin_rule_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/signin.js"></script>
+{% endblock %}

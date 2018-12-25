@@ -1,0 +1,44 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">中奖人</th>
+                            <th class="text-center">优惠券状态</th>
+                            <th class="text-center">优惠券名称</th>
+                            <th class="text-center">核销商户</th>
+                            <th class="text-center">核销时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lottery_record in lottery_records %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td field="user_name">{{ lottery_record.user_name }}</td>
+                            <td field="coupon_status">{{ lottery_record.coupon_status }}</td>
+                            <td field="coupon_name">{{ lottery_record.coupon_name }}</td>
+                            <td field="seller_name">{{ lottery_record.seller_name }}</td>
+                            <td field="use_time">{{ lottery_record.use_time }}</td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if lottery_records %}
+<ul class="pager">
+    {% if lottery_records.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ lottery_records.number }}页</li>
+    <li name="total_page">共{{ lottery_records.paginator.num_pages }}页</li>
+    <li name="count">共{{ lottery_records.paginator.count }}条数据</li>
+    {% if lottery_records.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

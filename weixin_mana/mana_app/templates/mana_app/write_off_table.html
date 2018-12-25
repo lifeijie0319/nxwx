@@ -1,0 +1,54 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">交易人</th>
+                            <th class="text-center">优惠券名称</th>
+                            <th class="text-center">优惠券类别</th>
+                            <th class="text-center">优惠类别</th>
+                            <th class='text-center'>满减起始金额</th>
+                            <th class='text-center'>抵消积分数额</th>
+                            <th class="text-center">核销时间</th>
+                            <th class="text-center">核销商户</th>
+                            <th class="text-center">交易编号</th>
+                            <th class="text-center">交易信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lottery_record in lottery_records %}
+                        <tr lottery_record_id="{{ lottery_record.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{lottery_record.opposite.name}}</td>
+                            <td>{{lottery_record.coupon.name}}</td>
+                            <td>{{lottery_record.coupon.busi_type}}</td>
+                            <td>{{lottery_record.coupon.discount_type}}</td>
+                            <td>{{lottery_record.coupon.discount_startline}}</td>
+                            <td>{{lottery_record.coupon.value}}</td>
+                            <td>{{lottery_record.trade_datetime|date:"Y-m-d H:i:s"}}</td>
+                            <td>{{lottery_record.trader.name}}</td>
+                            <td>{{lottery_record.orderno}}</td>
+                            <td>{{lottery_record.info}}</td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if lottery_records %}
+<ul class="pager">
+    {% if lottery_records.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ lottery_records.number }}页</li>
+    <li name="total_page">共{{ lottery_records.paginator.num_pages }}页</li>
+    <li name="count">共{{ lottery_records.paginator.count }}条数据</li>
+    {% if lottery_records.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

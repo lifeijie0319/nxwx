@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的票券</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+		<div id="my_coupon_list" class="ys_panel ticket_item">
+            {% for user_coupon in user_coupons %}
+            <a class="ys_item_media" href="{% url 'outer_app:coupon_use_page' %}?user_coupon_id={{ user_coupon.id }}">
+                <div class="ys_item_hd">
+                    {% if user_coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+                </div>
+                <div class="ys_item_bd">
+                    <h4>{{ user_coupon.name }}</h4>
+                    <div class="timer">
+                        <p><span>积分商城兑换所得</span>{{ user_coupon.expired_date }}到期</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="nomore"><span>没有更多了</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a class="linkcolor" href="{% url 'outer_app:coupon_invalid_page' %}">查看无效票券</a></div>
+	</div>
+    <script>
+        $(function(){
+            if($('#my_coupon_list > a.ys_item_media').length == 0){
+                $('#my_coupon_list').hide();
+                $('div.nomore span').text('暂无数据');
+            }
+        });
+    </script>
+</body>
+</html>

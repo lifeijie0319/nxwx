@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<meta charset="UTF-8">
+	<title>全部商品</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+	   <div class="ys_panel promotion_all">
+            {% for coupon in coupons %}
+            <a class="ys_item_media" href="{% url 'outer_app:promotion_details_page' %}?id={{ coupon.id }}">
+                <div class="ys_item_hd">
+                    {% if coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+                </div>
+                <div class="ys_item_bd">
+                    <p class="ys_item_p promotion_itemTitle">{{ coupon.name }}</p>
+                    <p>{{ coupon.credits }}积分</p>
+                </div>
+                <div class="ys_item_ft">兑换</div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="nomore">没有更多了</div>
+    </div>
+</body>
+</html>

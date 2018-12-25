@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的信息</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/my_info.js"></script>
+</head>
+<body ontouchstart>
+<div class="container">
+    <div class="user_panel flex_grid">
+        <div class="avatar">
+            <a id="shop_photo" href="javascript:;"><img class="media-avatar" src="{{ user.img_path }}"></a>
+        </div>
+        <a href="javascript:;" class="user_set ys_cell_bd">
+            <div class="ys_cell_bd">
+                <h3>{{ user.name }}</h3>
+                {% if user.is_new %}
+                <p>未认证</p>
+                {% else %}
+                <p>已认证</p>
+                {% endif %}
+            </div>
+<!--
+            <div class="ys_cell_ft">设置</div>
+-->
+        </a>
+    </div>
+    <div class="user_foot flex_grid">
+        <a href="{% url 'outer_app:coupon_page' %}" class="user_func ys_cell_bd">
+            <p>票券<span>{{ my_coupons_num }}张</span></p>
+        </a>
+        <a href="{% url 'outer_app:credits_page' %}" class="user_func ys_cell_bd">
+            <p>积分<span>{{ user.credits }}</span></p>
+        </a>
+    </div>
+    <div class="ys_cells">
+        <a class="ys_cell" href="{% url 'outer_app:user_payment_password_modify_page' %}">
+            <div class="ys_cell_bd">设置支付密码</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        <a class="ys_cell" href="{% url 'outer_app:address_modify_page' %}?from=my_info">
+            <div class="ys_cell_bd">修改收货地址</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        {% if user.is_new %}
+        <a class="ys_cell" href="{% url 'outer_app:user_binding' %}">
+            <div class="ys_cell_bd">用户绑定</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        {% endif %}
+        {% if user.is_manager %}
+        <a class="ys_cell" href="{% url 'outer_app:register_seller_audit_page' %}">
+            <div class="ys_cell_bd">商户注册申请管理</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        <a class="ys_cell" href="{% url 'outer_app:seller_replace_audit_page' %}">
+            <div class="ys_cell_bd">商户重新绑定微信号申请管理</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        <a class="ys_cell" href="{% url 'outer_app:staticfile' name='reservation_deal' %}">
+            <div class="ys_cell_bd">预约申请处理</div>
+            <div class="ys_cell_ft"></div>
+        </a>
+        {% endif %}
+    </div>
+</div>
+<!-- 底部导航 -->
+<div class="fixed_h"></div>
+<div class="ys_tabbar">
+    <a href="{% url 'outer_app:staticfile' name='index' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-zhuye"></i>
+        </div>
+        <p class="ys_tabbar_label">首页</p>
+    </a>
+    <a href="{% url 'outer_app:credits_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-licai"></i>
+        </div>
+        <p class="ys_tabbar_label">积分</p>
+    </a>
+    <a href="{% url 'outer_app:staticfile' name='reservation'%}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-shenghuo"></i>
+        </div>
+        <p class="ys_tabbar_label">预约</p>
+    </a>
+    <a href="{% url 'outer_app:user_info_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-wo"></i>
+        </div>
+        <p class="ys_tabbar_label">我的</p>
+    </a>
+</div>
+<script>init_nav();</script>
+<!-- 底部导航结束 -->
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商户注册</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body ontouchstart style="background-color: #fff">
+	<div class="container">
+		<div class="ys_prompt">
+			<div class="ys_tips_icon">
+                <img src="/static/outer_app/images/logox.png"/>
+			</div>
+			<div class="ys_prompt_tips">
+				<p class="ys_pt_desc">您还不是我行特约商户，无法进入该页面。立即注册享受我行积分服务</p>
+			</div>
+            <div class="ys_btns flex_grid">
+                <div class="flex_grow">
+                    <a class="ys_btn" href="{% url 'outer_app:staticfile' name='seller_register' %}">立即注册</a>
+                </div>
+                <div style="width: 15px;"></div>
+                <div class="flex_grow">
+                    <a class="ys_btn ys_plain_btn_primary" href="javascript:;" onclick="wx.closeWindow()">取消</a>
+                </div>
+            </div>
+            <div style="margin-left:20px;margin-right:20px;margin-top:10px;">
+                <p style="line-height: 1.6;">已经注册，需要重新绑定到当前微信号？<a class="linkcolor" href="/outer_app/staticfile/seller_replace/" style="display: inline-block;">点击绑定</a></p>
+                <!--<a href="/outer_app/staticfile/seller_replace/">已经注册，需要重新绑定到当前微信号？》》》</a>-->
+            </div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if IE 9]>         <html class="ie9 no-focus"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-focus"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="银硕web模板">
+        <meta name="robots" content="noindex, nofollow">
+        <!-- <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"> -->
+
+        <title>微信银行管理系统</title>
+
+        <!-- Icons -->
+        <!-- The following icons can be repl/static/aced with your own, they are used by desktop and mobile browsers -->
+        <link rel="shortcut icon" href="/static/mana_app/asset/img/favicons/favicon.png">
+        <link rel="icon" type="image/png" href="/static/mana_app/asset/img/favicons/favicon-96x96.png" sizes="96x96">
+        <!-- END Icons -->
+
+        <!-- Stylesheets -->
+        <!-- Web fonts 
+        <!-- Page JS Plugins CSS go here -->
+        <link rel="stylesheet" href="/static/mana_app/asset/css/select2.min.css">
+        <link rel="stylesheet" href="/static/mana_app/asset/css/select2-bootstrap.min.css">
+        <!-- OneUI CSS framework -->
+        <link rel="stylesheet" id="css-main" href="/static/mana_app/asset/css/oneui.css">
+        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+        <!-- <link rel="stylesheet" id="css-theme" href="asset/css/themes/flat.min.css"> -->
+        <link rel="stylesheet" href="/static/mana_app/css/ys_main.css">
+        <!-- END Stylesheets -->
+
+        <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+        <script src="/static/mana_app/asset/js/oneui.min.js"></script>
+        <script src="/static/mana_app/asset/js/select2.full.min.js"></script>
+        <script src="/static/mana_app/asset/plugin/jquery-validation/jquery.validate.min.js"></script>
+        <script src="/static/mana_app/asset/plugin/jquery-validation/additional-methods.min.js"></script>
+        <script src="/static/mana_app/asset/js/base_forms_validation.js"></script>
+        <!-- Page JS Plugins + Page JS Code -->
+        <script src="/static/mana_app/js/login.js"></script>
+    </head>
+
+
+    <body class="bg-white">
+        <!-- Login Content -->
+        <div class="content overflow-hidden animated fadeIn login_content">
+            <div class="login_wrap">
+                <div class="login_img">
+                    <img src="/static/mana_app/asset/img/logo.png" width="260">
+                </div>
+                <div class="login_form">
+                    <h4>登录 / Login</h4>
+                    <form class="form-horizontal push-50-t"  method="post" id="login_form">
+                        {% csrf_token %}
+                        <div class="form-group" id="manager_div">
+                            <div class="form-material form-material-success">
+                                <input class="form-control" type="text" id="manager_account" manager_exist="0" name="manager_account" placeholder="请输入账号">
+                                <label  for="manager_account">账号</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="password_div">
+                            <div class="form-material form-material-success">
+                                <input class="form-control" type="password" id="password" name="password" placeholder="请输入密码">
+                                <label for="password">密码</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-success" id="form_submit" type="button">登 录</button>
+                    </form> 
+                </div>
+            </div>
+            <footer class="content-mini content-mini-full font-s12 login_footer">
+                <div class="text-center text-gray">
+                    ©上海银硕软件技术有限公司 | 上海网安备 33010602001878号
+                </div>
+            </footer>
+        </div>
+        <!-- END Login Content -->
+    </body>
+</html>

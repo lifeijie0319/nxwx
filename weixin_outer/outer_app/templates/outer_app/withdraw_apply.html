@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>提现申请</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/withdraw_apply.js"></script>
+</head>
+<body ontouchstart>
+    <div class="container">
+        <form id="form">
+            <div class="flex_wrapper">
+                <div class="ys_cells_title">提现申请</div>
+                <div class="ys_cells withdraw">
+                    <div class="ys_cell">
+                        <div class="ys_cell_hd">
+                            <label>提现积分</label>
+                        </div>
+                        <div class="ys_cell_bd">
+                            <input name="credits" class="ys_input" type="number" pattern="^[1-9]{1}\d*$" placeholder="请输入提现积分" emptyTips="积分不能为空" notMatchTips="请输入正确的数额" required>
+                        </div>
+                    </div>
+                    <label class="ys_cell ys_cell_checkbox" for="receipt_provision">
+                        <div class="ys_cell_bd">提供发票</div>
+                        <div class="ys_cell_ft">
+                            <input class="ys_checkbox" id="receipt_provision" name="receipt_provision" type="checkbox" checked>
+                            <i class="iconfont icon-c-radio-none"></i>
+                        </div>
+                    </label>
+                    <div class="ys_cell">
+                        <div class="ys_cell_bd">
+                            提现手续费比例
+                        </div>
+                        <div class="ys_cell_ft">
+                            <input name="poundage" class="ys_input" style="width: 100px" value="{{ poundage_low }}" type="text" disabled="disabled" poundage_high={{ poundage_high }}>
+                        </div>
+                    </div>
+                    <div class="ys_cell">
+                        <div class="ys_cell_bd">
+                            兑换比例(积分:现金)
+                        </div>
+                        <div class="ys_cell_ft">
+                            <input name="ratio" class="ys_input" style="width: 100px" value="{{ ratio }}" type="text" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="ys_cell">
+                        <div class="ys_cell_bd">
+                            提现金额(元)
+                        </div>
+                        <div class="ys_cell_ft">
+                            <input name="balance" class="ys_input" style="width: 100px" value="0" type="text" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="clause">
+                    <input name="min_balance" type="hidden" value="{{ min_balance }}">
+                    <h4>兑换须知</h4>
+                    <p>1、商户申请提现的积分只限于通过商品出售、服务提供获得的积分。<br>
+                    2、商户对应的个人客户因办理业务产生的积分以及接受赠送的积分不在可以提现的范围之内。<br>
+                    3、积分提现的比例由南浔银行确定，如有更改，以南浔银行最新公告为准，恕不另行通知。<br>
+                    4、勾选提供发票选项，视为商户同意在提现之日起7天内向南浔银行提供提现金额的等值增值税发票，未及时提供影响提现兑付时间的，由商户自行负责。<br>
+                    5、积分自产生（获得）之日起24个月内有效，满24个月后次月1日自动失效。</br>
+                    6、操作过程中如遇问题，欢迎咨询南浔银行各网点客户经理或致电0572-3013415咨询。</p>
+                </div>
+                <div class="flex_grow"></div>
+                <div class="ys_btns">
+                    <a id="submit" class="ys_btn" href="javascript:;">提现</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+bind = '0.0.0.0:9090'
+workers = 4
+backlog = 2048
+worker_class = "gevent"
+debug = True
+proc_name = 'gunicorn.proc'
+pidfile = '/home/nanxun/log/gunicorn/gunicorn.pid'
+accesslog = '/home/nanxun/log/gunicorn/access.log'
+errorlog = '/home/nanxun/log/gunicorn/error.log'
+loglevel = 'debug'

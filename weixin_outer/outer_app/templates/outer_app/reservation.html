@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预约</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:reservation_open_account_page' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_kaihu.png">
+                </div>
+                <div class="ys_cell_bd">开户办卡预约</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:reservation_loan_page' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_daikuan.png">
+                </div>
+                <div class="ys_cell_bd">贷款申请预约</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:reservation_etc_page' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_etc.png">
+                </div>
+                <div class="ys_cell_bd">ETC预约</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:reservation_withdrawal_page' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_quxian.png">
+                </div>
+                <div class="ys_cell_bd">大额取现预约</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:reservation_num_taking_page' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_yuyue.png">
+                </div>
+                <div class="ys_cell_bd">取号预约</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+        <div class="ys_cells re_item">
+            <a class="ys_cell" href="{% url 'outer_app:staticfile' name='reservation_status' %}">
+                <div class="ys_cell_hd">
+                    <img src="/static/outer_app/images/i_jindu.png">
+                </div>
+                <div class="ys_cell_bd">预约进度查询</div>
+                <div class="ys_cell_ft"></div>
+            </a>
+        </div>
+	</div>
+<!-- 底部导航 -->
+<div class="fixed_h"></div>
+<div class="ys_tabbar">
+    <a href="{% url 'outer_app:staticfile' name='index' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-zhuye"></i>
+        </div>
+        <p class="ys_tabbar_label">首页</p>
+    </a>
+    <a href="{% url 'outer_app:credits_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-licai"></i>
+        </div>
+        <p class="ys_tabbar_label">积分</p>
+    </a>
+    <a href="{% url 'outer_app:staticfile' name='reservation' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-shenghuo"></i>
+        </div>
+        <p class="ys_tabbar_label">预约</p>
+    </a>
+    <a href="{% url 'outer_app:user_info_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-wo"></i>
+        </div>
+        <p class="ys_tabbar_label">我的</p>
+    </a>
+</div>
+<script>init_nav();</script>
+<!-- 底部导航结束 -->
+</body>
+</html>

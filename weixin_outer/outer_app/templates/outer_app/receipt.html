@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>收积分</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/reconnecting-websocket.min.js"></script>
+    <script src="/static/outer_app/asset/qrcode.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/receipt.js?v=20180113"></script>
+</head>
+<body ontouchstart style="background-color: #6d70b8">
+<div class="container" id="page_receipt">
+    <div class="payment_content">
+        <div class="payment_title">
+            <img src="/static/outer_app/images/phone.png">我要收积分
+        </div>
+        <div class="payment_tips">扫一扫，向我付积分</div class="">
+        <div class="qrcode">
+            <div id="receipt_qrcode"></div>
+            <h1 id="receipt_credits" class="amounted" style="display:none"><span></span>积分</h1>
+            <a id="credits_set_amount" href="javascript:;" class="set_amount">设置数额</a>
+        </div>
+    </div>
+</div>
+<div class="ys_page" id="page_set_amount">
+    <div class="ys_content ys_page_x">
+        <form id="set_amount_form">
+            <div class="ys_cells">
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>积分数额</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input id="set_amount_amount" class="ys_input" type="number" placeholder="请输入积分数额" pattern="^[1-9]{1}\d*$" placeholder="请输入积分数额" emptyTips="积分数额不能为空" notMatchTips="请输入正确的数额" required>
+                    </div>
+                </div>
+            </div>
+            <div class="ys_btns mt30">
+                <a id="set_amount_submit" class="ys_btn" href="javascript:;">确定</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

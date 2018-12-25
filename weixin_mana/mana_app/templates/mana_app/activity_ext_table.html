@@ -1,0 +1,33 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">内容</th>
+                            <th class="text-center">备注</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody activity_id={{ activity_id }}>
+                        {% for item in items %}
+                        <tr item_id="{{ item.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ item.name }}</td>
+                            <td field="value">{{ item.value }}</td>
+                            <td field="remark">{{ item.remark }}</td>
+                            <td>
+                                <input name="delete" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-danger">
+                                <strong>查无数据</strong>
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>

@@ -1,0 +1,56 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">客户号</th>
+                            <th class="text-center">客户预授信额度</th>
+                            <th class="text-center">客户经理名称</th>
+                            <th class="text-center">客户经理工号</th>
+                            <th class="text-center">客户经理身份证号</th>
+                            <th class="text-center">创建时间</th>
+                            <th class="text-center">最后更新时间</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pre_credit_line in pre_credit_lines %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td field="cusno">{{ pre_credit_line.cusno }}</td>
+                            <td field="limit">{{ pre_credit_line.limit }}</td>
+                            <td field="manager_name">{{ pre_credit_line.manager.name }}</td>
+                            <td field="manager_account">{{ pre_credit_line.manager.account }}</td>
+                            <td field="manager_idcardno">{{ pre_credit_line.manager.idcardno }}</td>
+                            <td field="created_dtime">{{ pre_credit_line.add_dtime|date:"Y-m-d H:i:s" }}</td>
+                            <td field="updated_dtime">{{ pre_credit_line.mod_dtime|date:"Y-m-d H:i:s" }}</td>
+                            <td>
+                                <input name="update" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <input name="delete" type="button" class="btn btn-sm btn-success" value="删除"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if pre_credit_lines %}
+<ul class="pager">
+    {% if num_pages > 1 and page != 1 %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    {% endif %}
+    {% if page != 1 %}
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}             
+    <li name="current_page">第{{ page }}页</li>
+    <li name="total_page">共{{ num_pages }}页</li>
+    <li name="count">共{{ count }}条数据</li>
+    {% if page != num_pages %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    {% endif %}
+    {% if num_pages > 1 and page != num_pages %}
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xml>
+<ToUserName><![CDATA[{{ to_user }}]]></ToUserName>
+<FromUserName><![CDATA[{{ from_user }}]]></FromUserName>
+<CreateTime>{{ create_time }}</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[{{ content|safe }}]]></Content>
+</xml>

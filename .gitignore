@@ -1,0 +1,12 @@
+*.pyc
+*.swp
+*.doc
+*.docx
+*.xls
+*.xlsx
+bak/
+media/
+migrations/
+log/**/*.log*
+nohup.out
+db.sqlite3

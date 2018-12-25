@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>确认兑换</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/promotion_order.js?v=20180113"></script>
+</head>
+<body ontouchstart>
+    <div id="req_token" style="display:none">{{ req_token }}</div>
+	<div class="container">
+		<div class="commodity_item ys_panel">
+		    <div class="ys_item_media">
+		        <div class="ys_item_hd">
+                    {% if coupon.discount_type == '满减' %}
+                    <img src="/static/outer_app/images/coupon_mj.png">
+                    {% else %}
+                    <img src="/static/outer_app/images/coupon_dy.png">
+                    {% endif %}
+		        </div>
+		        <div class="ys_item_bd">
+		            <p id="name">{{ coupon.name }}</p>
+		            <div class="commodity_num">
+		                <h2><span id="price">{{ coupon.credits }}</span> 积分</h2>
+		                <p class="commodity_num_p">x<span id="real_num">0</span></p>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="payment_option ys_cell">
+		        <div class="ys_cell_bd">购买数量</div>
+		        <div class="ys_cell_ft">
+		            <div class="btn_minus">
+		                <a id="minus" class="num_btn" href="javascript:;"></a>
+		            </div>
+		            <div class="btn_input">
+		                <input id="input_num" type="number" value="0">
+		            </div>
+		            <div class="btn_plus">
+		                <a id="plus" class="num_btn" href="javascript:;"></a>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="payment_coins ys_cell">
+		        <div class="ys_cell_bd">我的积分：<span>{{ user.credits }}</span><span id="my_credits" style="display:none">{{ user.credits }}</span></div>
+		    </div>
+
+		</div>
+		<div class="ys_panel">
+		    <div class="ys_cell">
+		        <div class="ys_cell_bd">购买须知</div>
+		    </div>
+		    <div class="list_brief">
+		        <ul>
+		            <li>1、顾客购买商品后自动生成取件二维码</li>
+		            <li>2、购买成功后将不予退换</li>
+		            <li>3、取件码可在我购买的商品中查看</li>
+		            <li>4、顾客凭取件码或二维码在购买的实体店中予以换购商品</li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="pb60"></div>
+		<div class="fixed_bottom payment_buy_btn" id="purchase">
+		    <div class="payment_total">
+		        <p>合计：<span id="sum">0</span><i> 积分</i></p>
+		    </div>
+		    <a href="javascript:;">兑换</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的奖品</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+<div class="container">
+    <input type="hidden"/>
+    <div id="credits_history_list" class="ys_panel history_item">
+        {% for award in lottery_records %}
+        <a href="javascript:;" class="ys_item_media">
+            <div class="ys_item_hd">
+                <img src="/static/outer_app/images/credits_icon_award.png" alt="">
+            </div>
+            <div class="ys_item_bd">
+                <h4>{{ award.description }}</h4>
+                <p class="ys_item_p">{{ award.created_datetime }}</p>
+            </div>
+            <div class="ys_item_ft">{{ award.status }}</div>
+        </a>
+        {% endfor %}
+    </div>
+    <div id="credits_history_nomore" class="nomore" style="display:none">没有更多了</div>
+</div>
+</body>
+<script type="text/javascript">
+   $(function () {
+       if ($(".ys_item_media").length  ==0){
+           $("#credits_history_nomore").css("display","");
+       }
+   })
+</script>
+</html>

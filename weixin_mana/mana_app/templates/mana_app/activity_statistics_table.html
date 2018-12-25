@@ -1,0 +1,54 @@
+<div class="table-responsive">
+    <table class="table text-nowrap text-center table-bordered" name='addendum'>
+        {% csrf_token %}
+        <thead>
+        <tr>
+            <th class="text-center">序号</th>
+            <th class="text-center">活动名称</th>
+            <th class="text-center">客户输入字段</th>
+            <th class="text-center">信息字段一</th>
+            <th class="text-center">信息字段二</th>
+            <th class="text-center">信息字段三</th>
+            <th class="text-center">信息字段四</th>
+            <th class="text-center">信息字段五</th>
+            <th class="text-center">添加时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr item_id="{{ item.id }}">
+            <td>{{ forloop.counter }}</td>
+            <td field="name">{{ item.activity.name }}</td>
+            <td field="key">{{ item.activity.key }}</td>
+            <td field="col1">{{ item.col1 }}</td>
+            <td field="col2">{{ item.col2 }}</td>
+            <td field="col3">{{ item.col3 }}</td>
+            <td field="col2">{{ item.col4 }}</td>
+            <td field="col3">{{ item.col5 }}</td>
+            <td field="add_dtime">{{ item.add_dtime|date:"Y-m-d H:i:s" }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if items %}
+<ul class="pager">
+    {% if num_pages > 1 and page != 1 %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    {% endif %}
+    {% if page != 1 %}
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ page }}页</li>
+    <li name="total_page">共{{ num_pages }}页</li>
+    <li name="count">共{{ count }}条数据</li>
+    {% if page != num_pages %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    {% endif %}
+    {% if num_pages > 1 and page != num_pages %}
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

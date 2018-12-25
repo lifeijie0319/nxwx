@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>预约对公开户申请</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css?v=20180409" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css?v=20180409" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/validate.js?v=2"></script>
+    <script src="/static/outer_app/js/tools.js?v=20181026"></script>
+    <script src="/static/outer_app/js/reservation_dgkh.js?v=1"></script>
+</head>
+<body ontouchstart>
+<div class="container">
+    <form id="form">
+    <input type="hidden" name="req_token" value="{{ req_token }}">
+    <div class="ys_cells public_account_cell">
+        <div class="ys_cell ys_cell_vcode">
+            <div class="ys_cell_hd">
+                <label>营业执照</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="liscence" class="ys_input" type="text" placeholder="请输入营业执照编号" pattern="^\d{15}$|^[A-Z\d]{18}$" notMatchTips="营业执照格式不正确" emptyTips="营业执照编号不能为空" required>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>企业名称</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="orgname" class="ys_input" type="text" maxlength="30" placeholder="请输入企业名称" emptyTips="企业名称不能为空" required>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>计划开通的业务</label>
+            </div>
+            <div class="ys_cell_bd">
+                <select class="ys_select" name="subtype" emptyTips="计划开通的业务不能为空" required>
+                    <option value="" selected></option>
+                    {% for subtype in subtypes %}
+                    <option value="{{ subtype }}">{{ subtype }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="ys_cell ys_cell_select location">
+            <div class="ys_cell_hd">
+                <label>预约网点</label>
+            </div>
+            <div class="ys_cell_bd">
+                <select class="ys_select" name="branch" emptyTips="预约网点不能为空" required>
+                    <option value="" selected></option>
+                    {% for bank in banks %}
+                    <option value="{{ bank.id }}" telno="{{ bank.telno }}">{{ bank.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="ys_cell_ft" id="locate">
+                <img src="/static/outer_app/images/reservation/location.svg">
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>预约日期</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="due_date" class="ys_input" type="date" beyondTips="预约日期必须大于等于系统当前日期" placeholder="预约日期" emptyTips="预约日期不能为空" required>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>开户经办人姓名</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="user_name" class="ys_input" type="text" placeholder="请输入开户经办人姓名" emptyTips="开户经办人姓名不能为空" required>
+            </div>
+        </div>
+        <div class="ys_cell ys_cell_select">
+            <div class="ys_cell_hd">
+                <label>称呼</label>
+            </div>
+            <div class="ys_cell_bd">
+                <select class="ys_select" name="gender">
+                    <option value="male">先生</option>
+                    <option value="female">女士</option>
+                </select>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>开户经办人手机号码</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="user_mobile" class="ys_input" type="number" placeholder="请输入手机号码" pattern="^[0-9]{11}$" notMatchTips="请输入正确的手机号" emptyTips="开户经办人手机号码不能为空" required>
+            </div>
+        </div>
+        <div class="ys_cell ys_cell_vcode">
+            <div class="ys_cell_hd">
+                <label>验证码</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="vcode" class="ys_input" type="text" type="number" placeholder="短信验证码" pattern="[0-9]{6}" notMatchTips="验证码格式不正确" emptyTips="验证码不能为空" required>
+            </div>
+            <div class="ys_cell_ft">
+                <a id="send_vcode" class="ys_input_btn" href="javascript:;">获取验证码</a>
+            </div>
+        </div>
+        <div class="ys_cell">
+            <div class="ys_cell_hd">
+                <label>备注</label>
+            </div>
+            <div class="ys_cell_bd">
+                <input name="remark" class="ys_input" type="textarea" maxlength="50" placeholder="请输入备注">
+            </div>
+        </div>
+    </div>
+    <div class="ys_agree">
+        <span class="ys_agree_text">请阅读
+            <a class="ys_agree_clause open-popup" href="javascript:;" data-target="#clause-a">开户所需资料</a>
+        </span>
+    </div>
+    <div class="ys_btns mt30">
+        <a id="submit_btn" class="ys_btn" href="javascript:;">提交</a>
+    </div>
+    <div id="clause-a" class="ys_page">
+        <div class="ys_content ys_page_y">
+            <div class="ys_btns">
+                <div class="clause_content">
+                    <h4>对公开户所需资料</h4>
+                    <p id="protocol"></p>
+                    <p>表单下载:<a href="/static/outer_app/doc/对公开户授权委托书.docx">授权委托书</a></p>
+                </div>
+                <div class="pb60"></div>
+            </div>
+        </div>
+        <div class="ys_fixed_footer clause_btn">
+            <a class="ys_fixed_btn close-popup" href="javascript:;">继续</a>
+        </div>
+    </div>
+    </form>
+</div>
+</body>
+</html>

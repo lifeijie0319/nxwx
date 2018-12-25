@@ -1,0 +1,49 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">维护机构号</th>
+                            <th class="text-center">维护机构</th>
+                            <th class="text-center">商户名称</th>
+                            <th class="text-center">商户联系方式</th>
+                            <th class="text-center">积分交易客户名称</th>
+                            <th class="text-center">交易类型</th>
+                            <th class="text-center">交易金额</th>
+                            <th class="text-center">交易时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade_detail in trade_details %}
+                        <tr trade_detail_id="{{ trade_detail.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="bankno">{{ trade_detail.trader.seller.shop_set.first.bank.deptno }}</td>
+                            <td field="bank">{{ trade_detail.trader.seller.shop_set.first.bank.name }}</td>
+                            <td field="name">{{ trade_detail.trader.seller.shop_set.first.name }}</td>
+                            <td field="telno">{{ trade_detail.trader.seller.telno }}</td>
+                            <td field="opposite_name">{{ trade_detail.opposite.name }}</td>
+                            <td field="type">{{ trade_detail.type }}</td>
+                            <td field="credits">{{ trade_detail.credits }}</td>
+                            <td field="trade_datetime">{{ trade_detail.trade_datetime|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if trade_details %}
+<ul class="pager">
+    {% if trade_details.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ trade_details.number }}页</li>
+    <li name="total_page">共{{ trade_details.paginator.num_pages }}页</li>
+    <li name="count">共{{ trade_details.paginator.count }}条数据</li>
+    {% if trade_details.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

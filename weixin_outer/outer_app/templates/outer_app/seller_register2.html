@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商户注册</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/jquery-weui.js"></script>
+    <script src="/static/outer_app/asset/city-picker.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/seller_register2.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+    <input type="hidden" value="{{ region_tree }}" />
+    <div class="container">
+        <form id="form">
+            <div class="flex_wrapper">
+                <div class="ys_cells_title">店铺信息</div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>店铺名称</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input name="name" class="ys_input" type="text" placeholder="请输入店铺名称" pattern="^[\u4E00-\u9FA5\w]+$" emptyTips="店铺名称不能为空" notMatchTips="格式错误" required>
+                    </div>
+                </div>
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label>商店类别</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="shop_type">
+                            {% for shop_type in shop_types %}
+                            <option value="{{ shop_type }}">{{ shop_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>省市区</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" id="address_pcc" name="address_pcc" type="text" value="浙江省 湖州市 南浔区"/>
+                    </div>
+                </div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>街道/镇 -居委会/村</label>
+                    </div>
+                    <div class="ys_cell_bd" id="address_tv">
+                        <input class="ys_input" name="address_tv" type="text" value="南浔镇 夏家桥社区居委会"/>
+                    </div>
+                </div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>详细地址</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" name="address_detail" type="text" placeholder="请输入详细地址" pattern="^[\u4E00-\u9FA5\w]+$" emptyTips="详细地址不能为空" notMatchTips="格式错误" required>
+                    </div>
+                </div>
+                <div class="flex_grow"></div>
+                <div class="ys_btns">
+                    <a id="submit" class="ys_btn" href="javascript:;">下一步</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="2">商户名称</th>
+                            <th class="text-center" data-priority="2">维护机构</th>
+                            <th class="text-center" data-priority="3">维护机构编号</th>
+                            <th class="text-center" data-priority="1">经营者姓名</th>
+                            <th class="text-center" data-priority="1">联系方式</th>
+                            <th class="text-center" data-priority="1">关联账户</th>
+                            <th class="text-center" data-priority="1">提现积分</th>
+                            <th class="text-center" data-priority="1">提现手续费</th>
+                            <th class="text-center" data-priority="1">积分现金兑换比</th>
+                            <th class="text-center" data-priority="1">提现金额</th>
+                            <th class="text-center" data-priority="1">是否自开增值税发票</th>
+                            <th class="text-center" data-priority="1">申请日期</th>
+                            <th class="text-center" data-priority="1">提现状态</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for withdraw_application in withdraw_applications %}
+                        <tr withdraw_application_id="{{ withdraw_application.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="shop">{{ withdraw_application.seller.shop_set.first.name }}</td>
+                            <td field="bank">{{ withdraw_application.seller.shop_set.first.bank.name }}</td>
+                            <td field="bankno">{{ withdraw_application.seller.shop_set.first.bank.deptno }}</td>
+                            <td field="seller">{{ withdraw_application.seller.name }}</td>
+                            <td field="telno">{{ withdraw_application.seller.telno }}</td>
+                            <td field="account">{{ withdraw_application.seller.account }}</td>
+                            <td field="credits">{{ withdraw_application.credits }}</td>
+                            <td field="poundage">{{ withdraw_application.poundage }}</td>
+                            <td field="ratio">{{ withdraw_application.ratio }}</td>
+                            <td field="balance">{{ withdraw_application.balance }}</td>
+                            <td field="receipt_provision">
+                            {% if withdraw_application.receipt_provision %}
+                            是
+                            {% else %}
+                            否
+                            {% endif %}
+                            </td>
+                            <td field="date">{{ withdraw_application.application_date|date:"Y-m-d" }}</td>
+                            <td field="status">{{ withdraw_application.status }}</td>
+                            {% if withdraw_application.status == '待审批' %}
+                            <td>
+                                <input name="pass_withdraw_application" type="button" class="btn btn-sm btn-success" value="通过"/>
+                                <input name="reject_withdraw_application" type="button" class="btn btn-sm btn-danger" value="拒绝"/>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if withdraw_applications %}
+<ul class="pager">
+    {% if withdraw_applications.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ withdraw_applications.number }}页</li>
+    <li name="total_page">共{{ withdraw_applications.paginator.num_pages }}页</li>
+    <li name="count">共{{ withdraw_applications.paginator.count }}条数据</li>
+    {% if withdraw_applications.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

@@ -1,0 +1,164 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">商户名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="name" placeholder="请填写要查询的商户名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">维护机构</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="bank">
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">最迟注册日期</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="reg_date" type="date">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="form-shop">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_shop_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="gen_excel_btn" class="btn btn-minw btn-warning">生成Excel</button>
+            </div>
+            <h3 class="block-title">合作商户</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="shop_update_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        可使用优惠券选择
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="shop_update_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="name">商户名称</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="48" name="name" placeholder="不超过16个中文字符">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="type">商户类型</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="type">
+                                    {% for type in types %}
+                                    <option value="{{ type.id }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="bank">维护机构</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="bank">
+                                    {% for bank in banks %}
+                                    <option value="{{ bank.id }}">{{ bank.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="seller">经营者</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="48" name="seller" placeholder="不超过16个中文字符">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="telno">联系方式</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="48" name="telno" placeholder="不超过16个中文字符">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="account">关联账户</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="48" name="account" placeholder="更新账号请慎重">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="coupons">可使用优惠券</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="coupons" multiple>
+                                    {% for coupon in coupons %}
+                                    <option value="{{ coupon.id }}">{{ coupon.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="stick">置顶</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="stick">
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="status">置顶</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="status">
+                                    {% for status in statuses %}
+                                    <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="coupons_update_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/shop.js"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">开始日期</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="start_date" type="date">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">结束日期</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="end_date" type="date">
+                    </div>
+                </div>      
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">维护机构</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="bank">
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="form-trade_total">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_trade_total_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="gen_excel_btn" class="btn btn-minw btn-warning">生成Excel</button>
+            </div>
+            <h3 class="block-title"></h3>
+        </div>
+        <div class="block-content"  id="table_area"></div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/report_shop_trade_total.js"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>预约取号</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/reservation_num_taking.js?v=20180115" type="text/javascript" charset="utf-8"></script>
+</head>
+<body ontouchstart>
+    <div class="container">
+        <form id="form">
+        <div class="flex_wrapper">
+            <input type="hidden" name="req_token" value="{{ req_token }}">
+            <div class="ys_cells_title">叫号信息</div>
+            <div class="ys_cells">
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label>网点</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="branch">
+                            <option value="0" selected></option>
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>预约时间</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" name="taking_time" type="datetime-local"  placeholder="请选择预约时间" emptyTips="预约时间不能为空" required >
+                    </div>
+                </div>
+            </div>
+            <div class="clause">
+                <h4>温馨提醒</h4>
+                <p>1、预约取号只限于预约下一个工作日（非节假日）的业务，且时间限定为上午8点30分至下午3点30分，此时间之外请至网点现场取号。</p>
+                <p>2、本次预约取号方式为电子取号，无需至营业网点另行取号。</p>
+                <p>3、请至少提前10分钟达到营业网点等候办理，叫号三次后此号作废，请在网点重新取号。</p>
+                <p>4、预约取号需客户提前选择预约网点，每位客户每天只允许预约1次。</p>
+            </div>
+            <div class="flex_grow"></div>
+            <div class="ys_btns">
+                <a class="ys_btn" href="javascript:;" id="submit_btn" >下一步</a>
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

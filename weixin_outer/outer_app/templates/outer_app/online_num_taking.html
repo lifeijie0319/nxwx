@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线取号</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/online_num_taking.js?v=20180208"></script>
+</head>
+
+<body ontouchstart>
+<div class="container">
+    <form id="form">
+        <input type="hidden" name="req_token" value="{{ req_token }}">
+        <div class="flex_wrapper">
+            <div class="ys_cells_title">取号信息</div>
+            <div class="ys_cells">
+                <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label>网点</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name='branch'>
+                        </select>
+                    </div>
+                </div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>排队人数</label>
+                    </div>
+                    <div class="ys_cell_bd" id="list_count"></div>
+                </div>
+            </div>
+            <div class="clause">
+                <h4>温馨提醒：</h4>
+                <p>1、本功能为实时取号，请留意网点排队人数，叫号3次后此号作废。<br>
+                    2、为避免资源浪费，客户一天内可使用此功能的上限为4次，超过4次的请使用营业网点现场取号。<br>
+                    3、本次预约取号方式为电子取号，无需至营业网点另行取号。<br>
+                    4、在线取号只限于在上午8点30分至下午3点30分期间使用，此时间之外请至网点现场取号。</p>
+            </div>
+            <div class="flex_grow"></div>
+            <div class="ys_btns">
+                <a class="ys_btn" href="javascript:;" id="submit_btn">下一步</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

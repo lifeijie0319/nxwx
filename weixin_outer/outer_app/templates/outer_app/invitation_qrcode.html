@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分享邀请码</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/jquery_qrcode/jquery.qrcode.js"></script>
+    <script src="/static/outer_app/asset/jquery_qrcode/utf.js"></script>
+    <script src="/static/outer_app/asset/html2canvas.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/invitation_qrcode.js"></script>
+</head>
+<body ontouchstart style="background-color: #7751DC">
+<div class="container">
+    <div class="payment_content invitation_content">
+        <div class="payment_title">南浔银行积分邀请码</div>
+        <div id="signed_qrcode" class="qrcode">
+            <div id="qrcode"></div>
+            <div class="amounted"></div>
+        </div>
+    </div>
+    <div class="signin_belief">
+        <div class="belief_title"><i class="iconfont icon-warn-fill"></i>提示</div>
+        <div class="sb_list">长按可保存上述二维码图片，通过二维码扫描并注册成功的，奖励邀请与被邀请人各200积分。</div>
+    </div>
+</div>
+</body>
+</html>

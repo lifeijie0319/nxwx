@@ -1,0 +1,210 @@
+{% for reservation in reservations %}
+{% if reservation.status == "未受理" %}
+<div class="reservation_item ys_panel panel1">
+    <div class="ys_cell" href="javascript:;">
+        <div class="ys_cell_bd">业务编号：{{ reservation.orderno }}</div>
+        <div class="ys_cell_ft color_primary">未受理</div>
+    </div>
+    <div class="pay_ph_bd">
+        <div class="pay_ph_item">
+            <label class="reservation_title">{{ reservation.busi_type }}</label>
+            <span>{{ reservation.apply_dtime }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人：</label>
+            <span>{{ reservation.user_name }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人联系方式：</label>
+            <span><a href="tel:{{ reservation.user_telno }}">{{ reservation.user_telno }}</a></span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人身份证号码：</label>
+            <span>{{ reservation.user_idcardno }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约信息：</label>
+            <span>预约未受理，等待银行工作人员处理</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约网点：</label>
+            <span>{{ reservation.branch_name }}</span>
+        </div>
+        {% if reservation.busi_type == 'ETC预约' %}
+        <div class="pay_ph_item">
+            <label>预约车牌号：</label>
+            <span>{{ reservation.plate_num }}</span>
+        </div>
+        {% endif %}
+        {% if reservation.manager_name %}
+        <div class="pay_ph_item">
+            <label>预分配客户经理：</label>
+            <span>{{ reservation.manager_name }}</span>
+        </div>
+        {% endif %}
+        {% if reservation.busi_type == '取现预约' %}
+        <div class="pay_ph_item">
+            <label>预约时间：</label>
+            <span>{{ reservation.withdrawal_dtime }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>取现金额：</label>
+            <span>{{ reservation.withdrawal_balance }}</span>
+        </div>
+        {% endif%}
+        {% if reservation.busi_type == '快抵贷' %}
+        <div class="pay_ph_item">
+            <label>企业名称：</label>
+            <span>{{ reservation.orgname }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>房屋性质：</label>
+            <span>{{ reservation.house_property }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>房屋坐落地址：</label>
+            <span>{% if reservation.house_location %}{{ reservation.house_location }}{% else %}未知{% endif %}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预估可贷额度：</label>
+            <span>{% if reservation.assess_price %}{{ reservation.assess_price }}万元{% else %}未知{% endif %}</span>
+        </div>
+        {% endif%}
+        {% if reservation.busi_type == '对公开户预约' %}
+        <div class="pay_ph_item">
+            <label>企业名称：</label>
+            <span>{{ reservation.orgname }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>营业执照编号：</label>
+            <span>{{ reservation.liscence }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>计划开通的业务：</label>
+            <span>{{ reservation.subtype }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约日期：</label>
+            <span>{{ reservation.due_date }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>备注：</label>
+            <span>{% if reservation.remark %}{{ reservation.remark }}{% else %}无{% endif %}</span>
+        </div>
+        {% endif %}
+        <div class="pay_ph_item">
+            <label>我来处理：</label>
+            <span><input type="button" value="完成" orderno="{{ reservation.orderno }}"/></span>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="reservation_item ys_panel panel2">
+    <div class="ys_cell" href="javascript:;">
+        <div class="ys_cell_bd">业务编号：{{ reservation.orderno }}</div>
+        <div class="ys_cell_ft color_primary">已受理</div>
+    </div>
+    <div class="pay_ph_bd">
+        <div class="pay_ph_item">
+            <label class="reservation_title">{{ reservation.busi_type }}</label>
+            <span>{{ reservation.apply_dtime }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人：</label>
+            <span>{{ reservation.user_name }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人联系方式：</label>
+            <span><a href="tel:{{ reservation.user_telno }}">{{ reservation.user_telno }}</a></span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约人身份证号码：</label>
+            <span>{{ reservation.user_idcardno }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约网点：</label>
+            <span>{{ reservation.branch_name }}</span>
+        </div>
+        {% if reservation.busi_type == 'ETC预约' %}
+        <div class="pay_ph_item">
+            <label>预约车牌号：</label>
+            <span>{{ reservation.plate_num }}</span>
+        </div>
+        {% endif %}
+        {% if reservation.busi_type == '取现预约' %}
+        <div class="pay_ph_item">
+            <label>预约时间：</label>
+            <span>{{ reservation.withdrawal_dtime }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>取现金额：</label>
+            <span>{{ reservation.withdrawal_balance }}</span>
+        </div>
+        {% endif%}
+        {% if reservation.busi_type == '取号预约' %}
+        <div class="pay_ph_item">
+            <label>预约时间：</label>
+            <span>{{ reservation.taking_time }}</span>
+        </div>
+        {% else %}
+        <div class="pay_ph_item">
+            <label>预约信息：</label>
+            <span>已接受客户申请，请在规定时间内联系客户！</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>处理人员：</label>
+            <span>{{ reservation.manager_name }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>处理人员联系方式：</label>
+            <span><a href="tel:{{ reservation.manager_telno }}">{{ reservation.manager_telno }}</a></span>
+        </div>
+        <div class="pay_ph_item">
+            <label>受理时间：</label>
+            <span>{{ reservation.deal_dtime }}</span>
+        </div>
+        {% endif %}
+        {% if reservation.busi_type == '快抵贷' %}
+        <div class="pay_ph_item">
+            <label>企业名称：</label>
+            <span>{{ reservation.orgname }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>房屋性质：</label>
+            <span>{{ reservation.house_property }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>房屋坐落地址：</label>
+            <span>{% if reservation.house_location %}{{ reservation.house_location }}{% else %}未知{% endif %}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预估可贷额度：</label>
+            <span>{% if reservation.assess_price %}{{ reservation.assess_price }}万元{% else %}未知{% endif %}</span>
+        </div>
+        {% endif%}
+        {% if reservation.busi_type == '对公开户预约' %}
+        <div class="pay_ph_item">
+            <label>企业名称：</label>
+            <span>{{ reservation.orgname }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>营业执照编号：</label>
+            <span>{{ reservation.liscence }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>计划开通的业务：</label>
+            <span>{{ reservation.subtype }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>预约日期：</label>
+            <span>{{ reservation.due_date }}</span>
+        </div>
+        <div class="pay_ph_item">
+            <label>备注：</label>
+            <span>{% if reservation.remark %}{{ reservation.remark }}{% else %}无{% endif %}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endfor %}

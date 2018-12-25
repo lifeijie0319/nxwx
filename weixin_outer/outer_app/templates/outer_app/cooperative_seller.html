@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>合作商户</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/swiper.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+    <div class="container user_select">
+        <div class="swiper-container">
+            <div class="swiper-wrapper no_touch">
+                {% for type_list in shop_types %}
+                <div class="swiper-slide ys_grids ys_bbottom grids_small">
+                    {% for shop_type in type_list %}
+                    <a class="ys_grid" href="{% url 'outer_app:seller_list_typed' shop_type.id %}">
+                        <div class="ys_grid_icon">
+                            {% if shop_type.en_name %}
+                            <img src="/static/outer_app/images/shop_type/{{ shop_type.en_name }}.png" alt="">
+                            {% else %}
+                            <img src="/static/outer_app/images/shop_type/icon_tabbar.png" alt="">
+                            {% endif %}
+                        </div>
+                        <p class="ys_grid_label">{{ shop_type.name }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="seller_item ys_panel">
+            <a class="ys_cell" href="javascript:;">
+                <div class="ys_cell_bd">热门推荐</div>
+            </a>
+            {% for shop in recommended_shops %}
+            <div class="ys_item_media" href="javascript:;">
+                <div class="ys_item_hd">
+                    <img src="{{ shop.img_path }}" alt="">
+                </div>
+                <div class="ys_item_bd">
+                    <div class="mi_title ys_flex">
+                        <span class="shop_name">{{ shop.name }}</span>
+                        <span class="support_pay">支持积分消费</span>
+                    </div>
+                    <p class="ys_item_p">地址：{{ shop.address }}</p>
+                    <p class="ys_item_p">电话：{{ shop.seller_tel }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+    </script>
+</body>
+</html>

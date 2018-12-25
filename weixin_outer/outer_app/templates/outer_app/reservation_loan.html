@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>幸福快贷</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css?v=20180329" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/reservation_loan.js?v=20180126"></script>
+</head>
+<body ontouchstart style="background: #22a650">
+    <div class="container">
+        <div class="invitaion_banner">
+            <img src="/static/outer_app/images/reservation/banner02.jpg?v=20180329">
+        </div>
+        <form id="form">
+            <input type="hidden" name="req_token" value="{{ req_token }}">
+            <div class="title_loan"><span>贷款申请人资料</span></div>
+            <div class="cell_loan">
+                <div class="ys_cells">
+                    <div class="ys_cell">
+                        <div class="ys_cell_hd">
+                            <label style="min-width:120px;">申请人姓名</label>
+                        </div>
+                        <div class="ys_cell_bd">
+                            <input class="ys_input" type="text" name="user_name" placeholder="请输入姓名" pattern="^[\u4E00-\u9FA5]+$" emptyTips="姓名不能为空" notMatchTips="请输入真实姓名" required>
+                        </div>
+                    </div>
+                    <div class="ys_cell">
+                        <div class="ys_cell_hd">
+                            <label style="min-width:120px;">手机号</label>
+                        </div>
+                        <div class="ys_cell_bd">
+                            <input class="ys_input" type="tel" name="user_mobile" placeholder="请输入手机号" pattern="^[0-9]{11}$" emptyTips="手机号不能为空" notMatchTips="请输入正确的手机号" required>
+                        </div>
+                    </div>
+                    <div class="ys_cell ys_cell_select">
+                        <div class="ys_cell_hd">
+                            <label style="min-width:120px;">意向贷款网点</label>
+                        </div>
+                        <div class="ys_cell_bd">
+                            <select class="ys_select" name="branch">
+                                <option value="0" selected></option>
+                                {% for bank in banks %}
+                                <option value="{{ bank.id }}">{{ bank.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="ys_cells"> -->
+                <!-- <div class="ys_cell ys_cell_select">
+                    <div class="ys_cell_hd">
+                        <label style="min-width:120px;">意向贷款网点</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="branch">
+                            <option value="0" selected></option>
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div> -->
+                <!--
+                <label for="agreement" class="ys_agree">
+                    <input class="ys_agree_checkbox" id="agreement" type="checkbox" checked>
+                    <span class="ys_agree_text">阅读并同意</span>
+                </label>
+                -->
+                <!--<div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>贷款额度</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                          <input class="ys_input" type="text" name="cardnum" placeholder="请输入贷款额度" pattern="^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$" emptyTips="贷款额度不能为空" notMatchTips="贷款额度不正确" required>
+                    </div>
+                </div>
+                -->
+            <!-- </div> -->
+            <div class="ys_btns loan_nextbtn">
+                <a class="ys_btn bgcolor_danger" href="javascript:;" id="submit_btn" >下一步</a>
+            </div>
+            <div class="text_center pb15">
+                <a class="loan_text ys_agree_clause open-popup" href="javascript:;" data-target="#clause-a" style="color: #a1e8ba">《幸福快贷客户须知》</a>
+            </div>
+        </form>
+        <div id="clause-a" class="ys_page">
+            <div class="ys_content ys_page_y">
+                <div class="ys_btns">
+                    <div class="clause_content">
+                        <h4>幸福快贷客户须知</h4>
+                        <p id="protocol"></p>
+                    </div>
+                    <div class="pb60"></div>
+                </div>
+            </div>
+            <div class="ys_fixed_footer clause_btn">
+                <a class="ys_fixed_btn close-popup" href="javascript:;">继续</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

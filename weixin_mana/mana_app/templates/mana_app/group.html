@@ -1,0 +1,141 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户组名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="query_group_name" placeholder="请填写要查询的用户组名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-minw btn-success" type="button" id="query_group_btn">查询</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_group_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#group_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">用户组管理</h3>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">用户组名称</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for group in groups %}
+                        <tr group_id="{{ group.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ group.name }}</td>
+                            <td>
+                                {% if group.name != 'admin' %}
+                                <input name="delete_group" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_group" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <input name="group_menu" type="button" class="btn btn-sm btn-success" value="菜单权限"/>
+                                {% else %}
+                                不允许操作
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="group_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        新增用户组
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="group_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="group_name">用户组名称 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" name="group_name" placeholder="数字字母下划线，第1位是字母，最少3位">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="group_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+
+    <div class="modal fade" id="group_menu_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">菜单授权</h4>
+                </div>
+                <div class="modal-body">
+                   <div class="row">
+                       <div class="form-group col-md-12">
+                           <label class="col-md-3 control-label label-sm">用户组名称:</label>
+                           <div class="col-md-9" id="group_menu_modal_name"></div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="form-group col-md-12">
+                           <label class="col-md-3 control-label label-sm">菜单列表:</label>
+                           <div class="col-md-9">
+                               <div class="content">
+                                   <div id="group_menu_modal_data"></div>
+                               </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+               <div class="modal-footer">
+                    <button type="button" class="btn blue" id="group_menu_modal_submit">保存</button>
+                    <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+<link rel="stylesheet" href="/static/mana_app/asset/plugin/jstree/style.min.css" />
+<script src="/static/mana_app/asset/plugin/jstree/jstree.min.js"></script>
+<script type="text/javascript" src="/static/mana_app/js/group.js"></script>
+{% endblock %}

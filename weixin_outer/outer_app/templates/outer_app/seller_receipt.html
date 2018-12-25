@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>收积分</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/qrcode.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/seller_receipt.js"></script>
+</head>
+<body ontouchstart style="background-color: #6d70b8">
+<div class="container">
+	<div id="page_seller_receipt">
+		<div class="payment_content">
+		    <div class="payment_title">
+		        <img src="/static/outer_app/images/phone.png">我要收积分
+		    </div>
+		    <div class="payment_tips">扫一扫，向我付积分</div class="">
+		    <div class="qrcode">
+		        <div id="seller_receipt_qrcode"></div>
+		        <a id="credits_set_amount" href="javascript:;" class="set_amount">设置数额</a>
+		    </div>
+		</div>
+	</div>
+    <div id="page_set_amount" style="display:none">
+        <div class="ys_cells">
+            <div class="ys_cell">
+                <div class="ys_cell_hd">
+                    <label>积分数额</label>
+                </div>
+                <div class="ys_cell_bd">
+                    <input id="set_amount_amount" class="ys_input" type="number" placeholder="请输入积分数额">
+                </div>
+            </div>
+        </div>
+        <div class="ys_btns mt30">
+            <a id="set_amount_submit" class="ys_btn" href="javascript:;">确定</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

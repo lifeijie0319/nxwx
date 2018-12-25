@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>交易明细详情</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+</head>
+<body ontouchstart>
+<div class="container">
+	<div class="pay_preview history_detail">
+		<div class="pay_ph_hd ys_flex">
+			<label>积分数额</label>
+            {% if detail.credits > 0 %}
+			<div class="ys_cell_bd pay_ph_value"><i>+</i><span>{{ detail.credits }}</span></div>
+            {% else %}
+            <div class="ys_cell_bd pay_ph_value"><i></i><span>{{ detail.credits }}</span></div>
+            {% endif %}
+		</div>
+		<div class="pay_ph_bd">
+			<div class="pay_ph_item">
+				<label>对方账户</label>
+				<span>{{ detail.opposite_name }}</span>
+			</div>
+            <div class="pay_ph_item">
+                <label>交易类型</label>
+                <span>{{ detail.type }}</span>
+            </div>
+            <div class="pay_ph_item">
+                <label>交易详情</label>
+                <span>{{ detail.info }}</span>
+            </div>
+			<div class="pay_ph_item">
+				<label>交易时间</label>
+				<span>{{ detail.trade_datetime }}</span>
+			</div>
+			<div class="pay_ph_item">
+				<label>订单号</label>
+				<span>{{ detail.orderno }}</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

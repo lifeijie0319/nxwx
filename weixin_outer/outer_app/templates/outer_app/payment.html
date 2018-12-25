@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>积分消费</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/reconnecting-websocket.min.js"></script>
+    <script src="/static/outer_app/asset/qrcode.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/payment.js?v=20180113"></script>
+</head>
+<body ontouchstart style="background-color: #4e78cf">
+	<div class="container">
+		<div class="payment_content">
+		    <div class="payment_title">
+		        <img src="/static/outer_app/images/safe.png">向商家付积分
+		    </div>
+            <div class="payment_tips">扫一扫，向我收积分</div>
+            <!--
+		    <div class="barcode">
+		    	<img src="/static/outer_app/images/cnaidc.png">
+		    </div>
+            -->
+		    <div class="qrcode" id="qrcode"></div>
+		</div>
+	</div>
+</body>
+</html>

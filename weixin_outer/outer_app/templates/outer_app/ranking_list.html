@@ -1,0 +1,26 @@
+<div class="ys_panel ranking_list">
+    {% for item in ranking_list %}
+    <div class="ys_item_media">
+        <div class="ys_item_hd">
+            {% if forloop.counter == 1 %}
+            <img src="/static/outer_app/images/invitation/first.png">
+            {% elif forloop.counter == 2 %}
+            <img src="/static/outer_app/images/invitation/second.png">
+            {% elif forloop.counter == 3 %}
+            <img src="/static/outer_app/images/invitation/third.png">
+            {% else %}
+            {{ forloop.counter }}
+            {% endif %}
+        </div>
+        <!--
+        <div class="user_avatar">
+            <img src="images/acount_avatar.png">
+        </div>
+        -->
+        <div class="ys_item_bd">
+            <h4>{{ item.name }}</h4>
+        </div>
+        <div class="ys_item_ft">{{ item.invitation_num }}人</div>
+    </div>
+    {% endfor %}
+</div>

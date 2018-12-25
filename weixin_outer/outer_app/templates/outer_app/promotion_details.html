@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品详情</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/swipe.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/promotion_details.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+		<div class="swipe" id="promotion_slide">
+		    <ul>
+		        <li>
+		            <a href="javascript:;">
+		                <img id="carousel_img1" src="/static/outer_app/images/loading_fail.png" alt="">
+		            </a>
+		        </li>
+		        <li>
+		            <a href="javascript:;">
+		                <img id="carousel_img2" src="/static/outer_app/images/loading_fail.png" alt="">
+		            </a>
+		        </li>
+		    </ul>
+		    <div class="dot">
+		        <span></span>
+		        <span></span>
+		    </div>
+		</div>
+		<div class="promotion_title">
+		    <p class="ctitle_wrap">{{ coupon.name }}</p>
+		    <div class="promotion_price">
+		    	<label>
+		    		<b>{{ coupon.credits }}</b><span> 积分</span>
+		    	</label>
+		    	<p>
+		    		<i class="cnum_wrap">剩余：<span>{{ coupon.leftnum }}</span></i><i>已兑：<span>{{ coupon.soldnum }}</span></i>
+		    	</p>
+		    </div>
+		</div>
+		<div class="ys_panel">
+		    <div class="ys_cell">
+		        <div class="ys_cell_bd">商品介绍</div>
+		    </div>
+		    <div class="promotion_intro">
+		    	<h4>商品描述</h4>
+		    	<p>{{ coupon.description }}</p>
+                <h4>上架时间</h4>
+                <p>{{ coupon.on_date }}</p>
+                <h4>下架时间</h4>
+                <p>{{ coupon.off_date }}</p>
+                <h4>过期时间</h4>
+                <p>{{ coupon.expired_date }}</p>
+                {% if coupon.limit %}
+                <h4>最大购买数量</h4>
+                <p>{{ coupon.limit }}张</p>
+                {% endif %}
+                {% if shops %}
+		    	<h4>商家介绍</h4>
+                {% for shop in shops %}
+		    	<p>店铺名称：{{ shop.name }}<br>电话：{{ shop.seller_telno }}<br>地址：{{ shop.address }}</p>
+                {% endfor %}
+                {% endif %}
+                <h4>兑换条件</h4>
+                <p>
+                {% if coupon.term1 and coupon.term2 %}
+                1. {{ coupon.term1 }}
+                <br>2. {{ coupon.term2 }}
+                {% if coupon.term_relation == 'or' %}
+                <br>说明：两个条件满足一个即可
+                {% else %}
+                <br>说明：两个条件必须同时满足
+                {% endif %}
+                {% elif coupon.term1 %}
+                {{ coupon.term1 }}
+                {% elif coupon.term2 %}
+                {{ coupon.term2 }}
+                {% else %}
+                无
+                {% endif %}
+                </p>
+                {% if coupon.img_path %}
+		    	<h4>商品图片</h4>
+                {% endif %}
+		    </div>
+		    <div class="promotion_img">
+                {% if coupon.img_path %}
+		        <img src="{{ coupon.img_path }}" alt="">
+                {% endif %}
+		    </div>
+		</div>
+		<div class="pb60"></div>
+		<div class="ys_fixed_footer ys_no_border">
+		    <a class="share_btn" href="javascript:;">分享</a>
+		    <a id="order" class="ys_fixed_btn" href="javascript:;">兑换</a>
+		</div>
+    </div>
+    <div class="share" onclick="$(this).fadeOut();">
+        <div class="share_box">
+            点击右上角发送给指定朋友或分享到朋友圈 <i></i>
+        </div>
+    </div>
+<script>
+    $('img').on('error', function(){
+        $(this).attr('src', '/static/outer_app/images/loading_fail.png');
+    });
+    $('#carousel_img1').attr('src', '/outer_app/media/carousel_figure/coupon_detail01.jpg?v=' + Math.random());
+    $('#carousel_img2').attr('src', '/outer_app/media/carousel_figure/coupon_detail02.jpg?v=' + Math.random());
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% for history in ret_history %}
+<a class="ys_item_media" href="{% url 'outer_app:credits_history_details_page' %}?id={{ history.id }}">
+    <div class="ys_item_hd">
+        <img src="{{ history.img_path }}" alt="">
+    </div>
+    <div class="ys_item_bd">
+        <h4>{{ history.type }}-{{ history.info }}</h4>
+        <p class="ys_item_p">{{ history.trade_datetime}}</p>
+    </div>
+    {% if history.credits > 0 %}
+    <div class="ys_item_ft numplus">+{{ history.credits }}</div>
+    {% else %}
+    <div class="ys_item_ft">{{ history.credits }}</div>
+    {% endif %}
+</a>
+{% endfor %}
+<p id="last_id">{{ last_id }}</p>

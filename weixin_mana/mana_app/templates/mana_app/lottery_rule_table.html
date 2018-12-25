@@ -1,0 +1,11 @@
+                        {% for param in params %}
+                        <tr param_id="{{ param.id }}">
+                            <td filed='value'>{{ param.value }}</td>
+                            <td field="name">{{ param.name }}</td>
+                            <td field="text">{{ param.text }}</td>
+                            <td>
+                                <input name="update_param" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <input name="delete_param" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                            </td>
+                        </tr>
+                        {% endfor %}

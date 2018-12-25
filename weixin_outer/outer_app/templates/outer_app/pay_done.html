@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>完成</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+<div class="container">
+	<div class="flex_wrapper container">
+		<div class="ys_prompt_pay">
+			<div class="ys_prompt_icon pay_done_icon">
+				<i class="iconfont icon-correct_big"></i>
+			</div>
+			<div class="ys_prompt_tips">
+				<h2 class="ys_pt_title">{{ title }}</h2>
+			</div>
+		</div>
+		<div class="pay_preview">
+            {% if credits %}
+			<div class="pay_ph_hd ys_flex">
+				<label>积分数额</label>
+				<div class="ys_cell_bd pay_ph_value"><span>{{ credits }}</span></div>
+			</div>
+            {% endif %}
+			<div class="pay_ph_bd">
+				<div class="pay_ph_item">
+					<label>对方账户</label>
+					<span>{{ opposite }}</span>
+				</div>
+				<div class="pay_ph_item">
+					<label>交易时间</label>
+					<span>{{ date_time }}</span>
+				</div>
+				<div class="pay_ph_item">
+					<label>订单号</label>
+					<span>{{ order_no }}</span>
+				</div>
+                {% if coupon %}
+                <div class="pay_ph_item">
+                    <label>消费优惠券</label>
+                    <span>{{ coupon }}</span>
+                </div>
+                {% endif %}
+			</div>
+		</div>
+		<div class="flex_grow"></div>
+		<div class="ys_btns">
+			<a class="ys_btn" href="{{ href }}">完成</a>
+		</div>
+	</div>
+</div>
+</body>
+</html>

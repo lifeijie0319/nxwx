@@ -1,0 +1,283 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">优惠券名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="query_coupon_name" placeholder="请填写要查询的优惠券名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-coupon">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_coupon_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_coupon_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#coupon_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">优惠券基本设置</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <div class="block-title">说明</h4>
+        </div>
+        <div class="block-content">
+            <ul>
+                <li>满减起点积分只针对满减类型的优惠券有效，表示只有消费达到该积分才能进行使用该满减券</li>
+                <li>如果固定消费金额不为0，表明该优惠券消费时商家默认收取该数额的积分，否则具体的消费积分由商家扫码时输入指定</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="coupon_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        新增优惠券
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="coupon_modal_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="name">优惠券名称 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="48" name="name" placeholder="不超过16个中文字符">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="description">优惠券描述 </label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="description" placeholder="请输入优惠券描述"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="credits">出售积分 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="credits" placeholder="请输入优惠券的价格" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="discount_type">优惠类型 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="discount_type">
+                                    {% for discount_type in discount_types %}
+                                    <option value="{{ discount_type.0 }}">{{ discount_type.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="discount_startline">优惠券满减起始积分 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="discount_startline" placeholder="请输入优惠券满减起始名称" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="value">优惠券抵用积分 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="value" placeholder="请输入优惠券消费价值" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="fixed_amount">优惠券固定消费金额</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="fixed_amount" placeholder="请输入优惠券的固定消费金额" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="on_date">上架日期 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date" name="on_date" placeholder="请输入优惠券上架日期">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="off_date">下架日期 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date" name="off_date" placeholder="请输入优惠券下架日期">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="expired_date">过期日期 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="date" name="expired_date" placeholder="请输入优惠券过期日期">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="limit">优惠券购买数量限制 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="limit" placeholder="请输入优惠券购买数量限制" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="busi_type">业务类型 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="8" name="busi_type" placeholder="不超过8个中文字符">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="soldnum">优惠券售出数量 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="soldnum" placeholder="请输入优惠券售出数量" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="leftnum">优惠券剩余数量 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="number" name="leftnum" placeholder="请输入优惠券剩余数量" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="term1">优惠券购买条件一</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="term1">
+                                    <option value="-1">无</option>
+                                    {% for term in terms %}
+                                    <option value="{{ term.id }}">{{ term.get_str }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="term2">优惠券购买条件二</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="term2">
+                                    <option value="-1">无</option>
+                                    {% for term in terms %} 
+                                    <option value="{{ term.id }}">{{ term.get_str }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="term_relation">优惠券条件关系</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="term_relation">
+                                    <option value="">无</option>
+                                    {% for term_relation in term_relations %}
+                                    <option value="{{ term_relation.0 }}">{{ term_relation.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="shops">可消费商店 </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="shops" multiple>
+                                    {% for shop in shops %}
+                                    <option value="{{ shop.id }}">{{ shop.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="coupon_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+<!--model-->
+    <div class="modal fade" id="coupon_send_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        赠送优惠卷
+                    </h4>
+                </div>
+
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="coupon_send_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="send_phone">赠送用户手机号 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" name="send_phone" multiple></input>
+                            </div>
+                             <input type="hidden" name="coupon_id">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="coupon_send_submit">赠送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--end model-->
+    <!-- Modal -->
+    <div class="modal fade" id="coupon_upload_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        优惠券图图片上传
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="coupon_upload_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">原图片</label>
+                            <div class="col-md-7">
+                                <img id="origin_img" src="" class="img-responsive center-block">
+                            </div>
+                        </div>
+                        <input type="hidden" name="coupon_id">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="img">图片选择</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="file" name="img" accept="image/*" placeholder="请选择一张图片" multiple="multiple">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">新图片</label>
+                            <div class="col-md-7">
+                                <img id="preview" src="" class="img-responsive center-block">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="coupon_upload_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/coupon.js"></script>
+{% endblock %}

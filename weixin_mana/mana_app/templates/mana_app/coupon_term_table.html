@@ -1,0 +1,15 @@
+{% for coupon_term in coupon_terms %}
+<tr coupon_term_id="{{ coupon_term.id }}">
+    <td>{{ forloop.counter }}</td>
+    <td field="code">{{ coupon_term.code }}</td>
+    <td field="description">{{ coupon_term.description }}</td>
+    <td field="start_date">{{ coupon_term.start_date|date:"Y-m-d" }}</td>
+    <td field="end_date">{{ coupon_term.end_date|date:"Y-m-d" }}</td>
+    <td field="arg_x">{{ coupon_term.arg_x }}</td>
+    <td field="arg_y">{{ coupon_term.arg_y }}</td>
+    <td field="arg_z">{{ coupon_term.arg_z }}</td>
+    <td>
+        <input name="update_coupon_term" type="button" class="btn btn-sm btn-success" value="更新"/>
+    </td>
+</tr>
+{% endfor %}

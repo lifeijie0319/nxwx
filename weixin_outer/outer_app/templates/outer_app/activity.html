@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>活动</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/dialog.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/activity.js"></script>
+</head>
+<body ontouchstart>
+<div class="container">
+    <form id="form">
+        <div class="flex_wrapper">
+            <div class="invitaion_banner">
+                <img src="/outer_app/media/activity/{{ activity_id }}.jpg">
+            </div>
+            <input type="hidden" name="req_token" value="{{ req_token }}">
+            <div class="ys_cells_title">个人资料</div>
+            <div class="ys_cells">
+                {% if col1 %}
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>{{ col1 }}</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" type="text" name="col1" emptyTips="第一栏不能为空" required>
+                    </div>
+                </div>
+                {% endif %}
+                {% if col2 %}
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>{{ col2 }}</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" type="text" name="col2" emptyTips="第二栏不能为空" required>
+                  </div>
+                </div>
+                {% endif %}
+                {% if col3 %}
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>{{ col3 }}</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                          <input class="ys_input" type="text" name="col3">
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <!--
+            <div class="instruction">
+                <div class="instruction_title">活动说明</div>
+                <div class="list_brief">
+                    <ul>
+                        <li>1. 邀请好友成功注册，您与好友均可获得积分。</li>
+                    </ul>
+                </div>
+            </div>
+            -->
+            <div class="flex_grow"></div>
+            <div class="ys_btns">
+                <a class="ys_btn" href="javascript:;" id="submit_btn" >提交</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

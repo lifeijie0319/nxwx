@@ -1,0 +1,15 @@
+                        {% for group in groups %}
+                        <tr group_id="{{ group.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ group.name }}</td>
+                            <td>
+                                {% if group.name != 'admin' %}
+                                <input name="delete_group" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_group" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <input name="group_menu" type="button" class="btn btn-sm btn-success" value="菜单权限"/>
+                                {% else %}
+                                不允许操作
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}

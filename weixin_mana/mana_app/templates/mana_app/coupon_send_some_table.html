@@ -1,0 +1,78 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" id="coupons_table">
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="1">名称</th>
+                            <th class="text-center" data-priority="1">描述</th>
+                            <th class="text-center" data-priority="1">出售积分</th>
+                            <th class="text-center" data-priority="1">优惠类型</th>
+                            <th class="text-center" data-priority="1">满减起点积分</th>
+                            <th class="text-center" data-priority="1">消费抵用积分</th>
+                            <th class="text-center" data-priority="1">固定消费金额</th>
+                            <th class="text-center" data-priority="1">上架日期</th>
+                            <th class="text-center" data-priority="1">下架日期</th>
+                            <th class="text-center" data-priority="1">过期日期</th>
+                            <th class="text-center" data-priority="1">购买数量限制</th>
+                            <th class="text-center" data-priority="1">业务类型限制</th>
+                            <th class="text-center" data-priority="1">售出数量</th>
+                            <th class="text-center" data-priority="1">剩余数量</th>
+                            <th class="text-center" data-priority="2">消费商店</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for coupon in coupons %}
+                        <tr coupon_id="{{ coupon.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ coupon.name }}</td>
+                            <td field="description">{{ coupon.description }}</td>
+                            <td field="credits">{{ coupon.credits }}</td>
+                            <td field="discount_type">{{ coupon.discount_type }}</td>
+                            <td field="discount_startline">{{ coupon.discount_startline }}</td>
+                            <td field="value">{{ coupon.value }}</td>
+                            <td field="fixed_amount">{{ coupon.fixed_amount }}</td>
+                            <td field="on_date">{{ coupon.on_date|date:"Y-m-d" }}</td>
+                            <td field="off_date">{{ coupon.off_date|date:"Y-m-d" }}</td>
+                            <td field="expired_date">{{ coupon.expired_date|date:"Y-m-d" }}</td>
+                            <td field="limit">{{ coupon.limit }}</td>
+                            <td field="busi_type">{{ coupon.busi_type }}</td>
+                            <td field="soldnum">{{ coupon.soldnum }}</td>
+                            <td field="leftnum">{{ coupon.leftnum }}</td>
+                            <td field="shops">
+                            {% for shop in coupon.shops.all %}
+                            {{ shop.name }}|
+                            {% endfor %}
+                            </td>
+                            <!--
+                            <td field="img"><img width="200" height="100" src="/mana_app/media/coupon/{{ coupon.id }}.jpg" onError="this.src='/mana_app/media/coupon/default.jpg'"></td>
+                            -->
+                            <td>
+                                <!--
+                                <input name="show_coupon_detail" type="button" class="btn btn-sm btn-success" value="详情"/>
+                                -->
+                                <input name="send_coupon" type="button" class="btn btn-sm btn-success" value="赠送优惠券"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if coupons %}
+<ul class="pager">
+    {% if coupons.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ coupons.number }}页</li>
+    <li name="total_page">共{{ coupons.paginator.num_pages }}页</li>
+    <li name="count">共{{ coupons.paginator.count }}条数据</li>
+    {% if coupons.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

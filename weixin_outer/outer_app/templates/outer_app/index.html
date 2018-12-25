@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/swipe.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script>
+        $(function(){
+            $('#index_slide').swipeSlide({
+                autoSwipe:true,//自动切换默认是
+                speed:4000,//速度默认4000
+                continuousScroll:true,//默认否
+                transitionType:'cubic-bezier(0.22, 0.69, 0.72, 0.88)',//过渡动画linear/ease/ease-in/ease-out/ease-in-out/cubic-bezier
+                lazyLoad:true,//懒加载默认否
+                firstCallback : function(i,sum,me){
+                    me.find('.dot').children().first().addClass('cur');
+                },
+                callback : function(i,sum,me){
+                    me.find('.dot').children().eq(i).addClass('cur').siblings().removeClass('cur');
+                }
+            });
+        });
+    </script>
+</head>
+<body ontouchstart>
+	<div class="container">
+        <div class="swipe" id="index_slide">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img id="carousel_img1" src="/static/outer_app/images/loading_fail.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img id="carousel_img2" src="/static/outer_app/images/loading_fail.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img id="carousel_img3" src="/static/outer_app/images/loading_fail.png" alt="">
+                    </a>
+                </li>
+            </ul>
+            <div class="dot">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="ys_grids ys_grids_border">
+            <a class="ys_grid grid_border" href="{% url 'outer_app:online_num_taking_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_online_num_taking.png" alt="">
+                </div>
+                <p class="ys_grid_label">在线取号</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:map_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_branch_query.png" alt="">
+                </div>
+                <p class="ys_grid_label">网点查询</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:seller_list_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_cooperative_seller.png" alt="">
+                </div>
+                <p class="ys_grid_label">合作商户</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:promotion_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/credits_icon_promotion.png" alt="">
+                </div>
+                <p class="ys_grid_label">积分优惠</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:sign_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_sign.png" alt="">
+                </div>
+                <p class="ys_grid_label">签到</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:seller_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_seller.png" alt="">
+                </div>
+                <p class="ys_grid_label">我是商家</p>
+            </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:online_num_taking_status_page' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/icon_online_num_taking.png" alt="">
+                </div>
+                <p class="ys_grid_label">取号查询</p>
+            </a>
+        </div>
+	</div>
+<!-- 底部导航 -->
+<div class="fixed_h"></div>
+<div class="ys_tabbar">
+    <a href="{% url 'outer_app:staticfile' name='index' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-zhuye"></i>
+        </div>
+        <p class="ys_tabbar_label">首页</p>
+    </a>
+    <a href="{% url 'outer_app:credits_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-licai"></i>
+        </div>
+        <p class="ys_tabbar_label">积分</p>
+    </a>
+    <a href="{% url 'outer_app:staticfile' name='reservation'%}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-shenghuo"></i>
+        </div>
+        <p class="ys_tabbar_label">预约</p>
+    </a>
+    <a href="{% url 'outer_app:user_info_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-wo"></i>
+        </div>
+        <p class="ys_tabbar_label">我的</p>
+    </a>
+</div>
+<script>
+    init_nav();
+    $('img').on('error', function(){
+        $(this).attr('src', '/static/outer_app/images/loading_fail.png');
+    });
+    $('#carousel_img1').attr('src', '/outer_app/media/carousel_figure/index01.jpg?v=' + Math.random())
+    $('#carousel_img2').attr('src', '/outer_app/media/carousel_figure/index02.jpg?v=' + Math.random());
+    $('#carousel_img3').prop('src', '/outer_app/media/carousel_figure/index03.jpg?v=' + Math.random());
+</script>
+<!-- 底部导航结束 -->
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>大额取现预约</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/jquery-weui.min.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/reservation_withdrawal.js?v=20180125"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+    <form id="form">
+        <div class="flex_wrapper">
+            <input type="hidden" name="req_token" value="{{ req_token }}">
+            <div class="ys_cells_title">个人资料</div>
+            <div class="ys_cells">
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>姓名</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" type="text" name="user_name" placeholder="请输入姓名" pattern="^[\u4E00-\u9FA5]+$" emptyTips="姓名不能为空" notMatchTips="请输入真实姓名" required>
+                    </div>
+                </div>
+            	<div class="ys_cell">
+            		<div class="ys_cell_hd">
+            			<label>手机号</label>
+            		</div>
+                	<div class="ys_cell_bd">
+                        <input class="ys_input" type="tel" name="user_mobile" placeholder="请输入手机号" pattern="^[0-9]{11}$" emptyTips="手机号不能为空" notMatchTips="请输入正确的手机号" required>
+              	    </div>
+            	</div>
+            </div>
+    		<div class="ys_cells_title">取现信息</div>
+            <div class="ys_cells">
+    	    	<div class="ys_cell">
+    	    		<div class="ys_cell_hd">
+    	    			<label>取现金额</label>
+    	    		</div>
+    	        	<div class="ys_cell_bd">
+    	                <input class="ys_input" type="text" name="withdrawalnum" placeholder="请输入取现金额（单位：元）" pattern="^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$" emptyTips="取现金额不能为空" notMatchTips="取现金额不正确" required>
+                   	</div>
+    	    	</div>
+                <div class="ys_cell">
+                    <div class="ys_cell_hd">
+                        <label>取现日期</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <input class="ys_input" name="withdrawaltime" placeholder="请选择取现日期" type="datetime-local" emptyTips="取现日期不能为空"  required>
+                    </div>
+                </div>
+    	        <div class="ys_cell ys_cell_select">
+    	            <div class="ys_cell_hd">
+                        <label>选择网点</label>
+                    </div>
+                    <div class="ys_cell_bd">
+                        <select class="ys_select" name="branch">
+                            <option value="0" selected></option>
+                            {% for bank in banks %}
+                            <option value="{{ bank.id }}">{{ bank.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex_grow"></div>
+            <div class="ys_btns">
+                <a class="ys_btn" href="javascript:;" id="submit_btn" >下一步</a>
+            </div>
+        </div>
+    </form>
+	</div>
+</body>
+</html>

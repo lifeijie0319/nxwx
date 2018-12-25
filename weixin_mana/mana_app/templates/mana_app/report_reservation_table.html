@@ -1,0 +1,72 @@
+{% load cus_filters %}
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="1">客户申请时间</th>
+                            <th class="text-center" data-priority="2">客户名称</th>
+                            <th class="text-center" data-priority="2">身份证号码</th>
+                            <th class="text-center" data-priority="2">联系方式</th>
+                            <!--<th class="text-cen data-priority="1"ter">预约时间</th>-->
+                            <th class="text-center" data-priority="2">选择网点</th>
+                            <th class="text-center" data-priority="1">预约业务种类</th>
+                            <th class="text-center" data-priority="1">预约状态</th>
+                            <th class="text-center" data-priority="2">应答客户经理</th>
+                            <th class="text-center" data-priority="2">客户经理工号</th>
+                            <th class="text-center" data-priority="3">客户经理归属机构</th>
+                            <th class="text-center" data-priority="1">受理时间</th>
+                            <th class="text-center" data-priority="1">响应间隔</th>
+                            <th class="text-center" data-priority="2">企业名称</th>
+                            <th class="text-center" data-priority="2">系统评估价</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservations %}
+                        <tr reservation_id="{{ reservation.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="apply_dtime">{{ reservation.apply_dtime|date:"Y-m-d H:i" }}</td>
+                            <td field="user_name">{{ reservation.user.name }}</td>
+                            <td field="user_name">{{ reservation.user.idcardno }}</td>
+                            <td field="user_mobile">{{ reservation.user.telno }}</td>
+                            <!--
+                            {% if reservation.numbertakingreservation %}
+                            <td field="busi_date">{{ reservation.numbertakingreservation.taking_time|date:"Y-m-d H:i" }}</td>
+                            {% elif reservation.withdrawalreservation %}
+                            <td field="busi_date">{{ reservation.withdrawalreservation.withdrawaltime|date:"Y-m-d H:i" }}</td>
+                            {% else %}
+                            <td field="busi_date">无</td>
+                            {% endif %}
+                            -->
+                            <td field="branch">{{ reservation.branch.name }}</td>
+                            <td field="busi_type">{{ reservation.busi_type }}</td>
+                            <td field="status">{{ reservation.status }}</td>
+                            <td field="manager_name">{{ reservation.handler.name }}</td>
+                            <td field="manager_account">{{ reservation.handler.account }}</td>
+                            <td field="manager_branch">{{ reservation.handler.bankbranch.name }}</td>
+                            <td field="deal_dtime">{{ reservation.deal_dtime|date:"Y-m-d H:i" }}</td>
+                            <td field="interval">{{ reservation.deal_dtime|dtime_minus:reservation.apply_dtime }}</td>
+                            <td field="orgname">{{ reservation.reservationkdd.orgname }}</td>
+                            <td field="assess_price">{{ reservation.reservationkdd.assess_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if reservations %}
+<ul class="pager">
+    {% if reservations.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ reservations.number }}页</li>
+    <li name="total_page">共{{ reservations.paginator.num_pages }}页</li>
+    <li name="count">共{{ reservations.paginator.count }}条数据</li>
+    {% if reservations.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

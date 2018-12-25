@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>进度查询</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/withdraw_status.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+	    <div class="ys_navbar">
+	        <a class="ys_navbar_item nav_active" href="#tab1">待审批</a>
+            <a class="ys_navbar_item" href="#tab2">已审批</a>
+	        <a class="ys_navbar_item" href="#tab3">未通过</a>
+	    </div>
+	    <div class="ys_tab">
+	        <div id="tab1" class="ys_tab_item tab_active">
+                {% for log in logs1 %}
+				<div class="withdraw_item ys_panel">
+		            <div class="ys_cell" href="javascript:;">
+		                <div class="ys_cell_bd color_primary">申请已提交，处理中</div>
+		                <div class="ys_cell_ft">{{ log.application_date }}</div>
+		            </div>
+		            <div class="pay_ph_bd">
+                        <div class="pay_ph_item">
+                            <label>提现数额：</label>
+            				<span>{{ log.credits }}积分</span>
+                        </div>
+            			<div class="pay_ph_item">
+            				<label>提供发票：</label>
+                            {% if log.receipt_provision %}
+            				<span>是</span>
+                            {% else %}
+                            <span>否</span>
+                            {% endif %}
+            			</div>
+            			<div class="pay_ph_item">
+            				<label>手续费：</label>
+            				<span>{% widthratio log.poundage 1 100 %}%</span>
+            			</div>
+                        <div class="pay_ph_item">
+                            <label>兑换比例：</label>
+                            <span>{{ log.ratio }}:1</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>状态详情：</label>
+                            <span>已提交提现申请，请等待后台人员审核。</span>
+                        </div>
+            		</div>
+		        </div>
+                {% endfor %}
+	        </div>
+	        <div id="tab2" class="ys_tab_item">
+                {% for log in logs2 %}
+	        	<div class="withdraw_item ys_panel">
+                    <div class="ys_cell" href="javascript:;">
+                        <div class="ys_cell_bd color_success">申请通过</div>
+                        <div class="ys_cell_ft">{{ log.application_date }}</div>
+		            </div>
+		            <div class="pay_ph_bd">
+                        <div class="pay_ph_item">
+                            <label>提现数额：</label>
+            				<span>{{ log.credits }}积分</span>
+                        </div>
+            			<div class="pay_ph_item">
+            				<label>提供发票：</label>
+                            {% if log.receipt_provision %}
+            				<span>是</span>
+                            {% else %}
+                            <span>否</span>
+                            {% endif %}
+            			</div>
+            			<div class="pay_ph_item">
+            				<label>手续费：</label>
+            				<span>{% widthratio log.poundage 1 100 %}%</span>
+            			</div>
+                        <div class="pay_ph_item">
+                            <label>兑换比例：</label>
+                            <span>{{ log.ratio }}:1</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>审核日期：</label>
+                            <span>{{ log.audit_date }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>状态详情：</label>
+                            <span>申请已受理，请等待银行处理，并关注您的提现账户，提现资金一般于每月上旬处理到账。</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+	        </div>
+            <div id="tab3" class="ys_tab_item">
+                {% for log in logs3 %}
+                <div class="withdraw_item ys_panel">
+                    <div class="ys_cell" href="javascript:;">
+                        <div class="ys_cell_bd color_danger">申请未通过</div>
+                        <div class="ys_cell_ft">{{ log.application_date }}</div>
+		            </div>
+		            <div class="pay_ph_bd">
+                        <div class="pay_ph_item">
+                            <label>提现数额：</label>
+            				<span>{{ log.credits }}积分</span>
+                        </div>
+            			<div class="pay_ph_item">
+            				<label>提供发票：</label>
+                            {% if log.receipt_provision %}
+            				<span>是</span>
+                            {% else %}
+                            <span>否</span>
+                            {% endif %}
+            			</div>
+            			<div class="pay_ph_item">
+            				<label>手续费：</label>
+            				<span>{% widthratio log.poundage 1 100 %}%</span>
+            			</div>
+                        <div class="pay_ph_item">
+                            <label>兑换比例：</label>
+                            <span>{{ log.ratio }}:1</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>提现日期：</label>
+                            <span>{{ log.audit_date }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>状态详情：</label>
+                            <span>您的提现申请被驳回，请联系银行客户经理进行处理。</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+	    </div>
+        <div class="nomore">没有更多了</div>
+	</div>
+
+</body>

@@ -1,0 +1,57 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+import sys
+
+from django.contrib import admin
+
+reload(sys);
+sys.setdefaultencoding("utf8")
+
+# Register your models here.
+from mana_app import models
+admin.site.register(models.Address)
+admin.site.register(models.BankBranch)
+admin.site.register(models.CarouselFigure)
+admin.site.register(models.CommonParam)
+admin.site.register(models.CommunityAssess)
+admin.site.register(models.Coupon)
+admin.site.register(models.CouponInvitation)
+admin.site.register(models.CusRegion)
+admin.site.register(models.ETCReservation)
+admin.site.register(models.Group)
+admin.site.register(models.Invitation)
+admin.site.register(models.LoanReservation)
+admin.site.register(models.LogInfo)
+admin.site.register(models.LotterySet)
+admin.site.register(models.LotteryRecord)
+admin.site.register(models.Manager)
+admin.site.register(models.ManagerRegion)
+admin.site.register(models.Menu)
+admin.site.register(models.MicroCreditContract)
+admin.site.register(models.NumberTakingReservation)
+admin.site.register(models.OnlineNumberTaking)
+admin.site.register(models.OpenAccountReservation)
+admin.site.register(models.Person)
+admin.site.register(models.PreCreditLine)
+admin.site.register(models.ReconciliationAmendment)
+admin.site.register(models.ReconciliationLog)
+admin.site.register(models.Region)
+admin.site.register(models.RepetitionExclude)
+admin.site.register(models.Reservation)
+admin.site.register(models.ReservationKDD)
+admin.site.register(models.ReservationNum)
+admin.site.register(models.ReservationForbidenDate)
+admin.site.register(models.Seller)
+admin.site.register(models.SellerRegister)
+admin.site.register(models.SellerReplace)
+admin.site.register(models.Shop)
+admin.site.register(models.ShopType)
+admin.site.register(models.SignData)
+admin.site.register(models.SignRecord)
+admin.site.register(models.SignRule)
+admin.site.register(models.Term)
+admin.site.register(models.TransactionDetail)
+admin.site.register(models.User)
+admin.site.register(models.UserCoupon)
+admin.site.register(models.WithdrawAppplication)
+admin.site.register(models.WithdrawalReservation)

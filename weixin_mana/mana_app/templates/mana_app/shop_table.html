@@ -1,0 +1,68 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center" data-priority="1">商户名称</th>
+                            <th class="text-center" data-priority="1">商户类型</th>
+                            <th class="text-center" data-priority="2">地址</th>
+                            <th class="text-center" data-priority="1">交易次数</th>
+                            <th class="text-center" data-priority="1">维护机构</th>
+                            <th class="text-center" data-priority="1">注册日期</th>
+                            <th class="text-center" data-priority="2">经营者</th>
+                            <th class="text-center" data-priority="2">联系方式</th>
+                            <th class="text-center" data-priority="2">关联账户</th>
+                            <th class="text-center" data-priority="2">可使用优惠券</th>
+                            <th class="text-center" data-priority="1">置顶</th>
+                            <th class="text-center" data-priority="1">状态</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for shop in shops %}
+                        <tr shop_id="{{ shop.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ shop.name }}</td>
+                            <td field="type">{{ shop.type.name }}</td>
+                            <td field="address">{{ shop.address.get_str }}</td>
+                            <td field="trade_times">{{ shop.trade_times }}</td>
+                            <td field="bank">{{ shop.bank.name }}</td>
+                            <td field="reg_date">{{ shop.created_datetime|date:"Y-m-d" }}</td>
+                            <td field="seller">{{ shop.seller.name }}</td>
+                            <td field="telno">{{ shop.seller.telno }}</td>
+                            <td field="account">{{ shop.seller.account }}</td>
+                            <td field="coupons">{% for coupon in shop.coupon_set.all %}{{ coupon.name }}|{% endfor %}</td>
+                            <td field="stick">{% if shop.stick %}是{% else %}否{% endif %}</td>
+                            <td field="status">{{ shop.status }}</td>
+                            <td>
+                                <input name="update" type="button" class="btn btn-sm btn-success" value="更新"/>
+                                <!--
+                                {% if shop.stick %}
+                                <input name="unstick_shop" type="button" class="btn btn-sm btn-danger" value="取消置顶"/>
+                                {% else %}
+                                <input name="stick_shop" type="button" class="btn btn-sm btn-success" value="置顶"/>
+                                {% endif %}
+                                -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if shops %}
+<ul class="pager">
+    {% if shops.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ shops.number }}页</li>
+    <li name="total_page">共{{ shops.paginator.num_pages }}页</li>
+    <li name="count">共{{ shops.paginator.count }}条数据</li>
+    {% if shops.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

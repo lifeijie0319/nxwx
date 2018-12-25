@@ -1,0 +1,161 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<div class="content forms_fixed">
+    <div class="row">
+        <form class="js-validation-bootstrap form-horizontal" method="post" id="query_form" name="query_form">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户账号</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="query_manager_account" placeholder="请填写要查询的账号">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户名称</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="query_manager_name" placeholder="请填写要查询的用户名">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="form-manager">
+                        <div class="col-sm-12">
+                            <button class="btn btn-minw btn-success" type="button" id="query_manager_btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <div class="block-options-simple">
+                <button id="add_manager_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#manager_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            <h3 class="block-title">用户管理</h3>
+        </div>
+        <div class="block-content" id="table_area"></div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <div class="block-title">说明</h4>
+        </div>      
+        <div class="block-content">
+            <ul>
+                <li>员工离职前，请确认其微信上的相关业务已经处理完毕，然后再更新其状态为离职</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="manager_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        新增用户
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="manager_modal_form">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="manager_account">用户账户 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="18" name="manager_account" placeholder="数字字母下划线，最少6位">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="manager_name">名称 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="8" name="manager_name" placeholder="请输入中文，不超过8位">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="manager_idcardno">用户身份证号码 <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="18" name="manager_idcardno" placeholder="请输入用户身份证号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="manager_telno">用户手机号 </label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" maxlength="11" name="manager_telno" placeholder="请输入用户手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-skill">所属机构</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="manager_bankbranch">
+                                    {% for bankbranch in bankbranchs %}
+                                    <option value="{{ bankbranch.id }}">{{ bankbranch.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-skill">所属用户组 </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="manager_groups" size="5" multiple>
+                                    {% for group in groups %}
+                                    <option value="{{ group.id }}">{{ group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-skill">角色 </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="manager_role">
+                                    <option value="0">无</option>
+                                    {% for role in roles %}
+                                    <option value="{{ role.0 }}">{{ role.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="manager_subrole">二级角色 </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="manager_subrole">
+                                    <option value="0" checked>无</option>
+                                    <option value="对公账管专员">对公账管专员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-skill">状态 </label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="manager_status">
+                                    {% for stat in status %}
+                                    <option value="{{ stat.0 }}">{{ stat.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="manager_modal_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/manager.js?v=1"></script>
+{% endblock %}

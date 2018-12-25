@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>注册推荐排行榜</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/tab.js"></script>
+    <script src="/static/outer_app/js/ranking.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+        <div class="ranking_head ys_flex">
+            <div class="ranking_head_title flex_grow">
+                <h1>排行榜</h1>
+                <p>推荐人数排行</p>
+            </div>
+            <img src="/static/outer_app/images/invitation/medal.png">
+        </div>
+        <div class="ys_navbar">
+            <a class="ys_navbar_item nav_active" href="#tab1">月排行</a>
+            <a class="ys_navbar_item" href="#tab2">年排行</a>
+        </div>
+
+        <div class="ys_tab">
+            <div id="tab1" class="ys_tab_item tab_active"></div>
+            <div id="tab2" class="ys_tab_item"></div>
+        </div>
+	</div>
+</body>

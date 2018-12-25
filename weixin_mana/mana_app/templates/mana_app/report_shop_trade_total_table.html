@@ -1,0 +1,44 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">维护机构号</th>
+                            <th class="text-center">维护机构</th>
+                            <th class="text-center">商户数量</th>
+                            <th class="text-center">总交易笔数</th>
+                            <th class="text-center">总交易积分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade_total in trade_totals %}
+                        <tr trade_total_id="{{ trade_total.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="bankno">{{ trade_total.bankno }}</td>
+                            <td field="bank">{{ trade_total.bank }}</td>
+                            <td field="shop_num">{{ trade_total.shop_num }}</td>
+                            <td field="trade_num">{{ trade_total.trade_num }}</td>
+                            <td field="credits">{{ trade_total.credits }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% if trade_totals %}
+<ul class="pager">
+    {% if trade_totals.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ trade_totals.number }}页</li>
+    <li name="total_page">共{{ trade_totals.paginator.num_pages }}页</li>
+    <li name="count">共{{ trade_totals.paginator.count }}条数据</li>
+    {% if trade_totals.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

@@ -1,0 +1,86 @@
+{% extends "mana_app/index.html" %}
+{% block content %}
+
+<!-- Page Content -->
+<div class="content">
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </li>
+            </ul>
+            <!--
+            <div class="block-options-simple">
+                <button id="add_figure_btn" class="btn btn-minw btn-warning" data-toggle="modal" data-target="#figure_modal"><i class="fa fa-plus"></i> 新增</button>
+            </div>
+            -->
+            <h3 class="block-title">参数设置</h3>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">图片说明</th>
+                            <th class="text-center">图片</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for figure in figures %}
+                        <tr figure_id="{{ figure.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="name">{{ figure.name }}</td>
+                            <td field="description">{{ figure.description }}</td>
+                            <td field="img"><img height="100" width="200" src="/mana_app/media/carousel_figure/{{ figure.name }}.jpg"></td>
+                            <td>
+                                <input name="update_figure" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="figure_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        更新图片
+                    </h4>
+                </div>
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="figure_update_form" enctype="multipart/form-data">
+                        <input type="hidden" name="figure_id">
+                        <input type="hidden" name="figure_name">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="img">图片选择</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="file" name="img" accept="image/*" placeholder="请选择一张图片" multiple="multiple">         
+                            </div>
+                            <img id="preview">
+                        </div>
+                    </form>     
+                </div>      
+                <div class="modal-footer">
+                    <button class="btn btn-minw btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-minw btn-primary" type="button" id="figure_update_submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+
+</div>
+<!-- END Page Content -->
+<script type="text/javascript" src="/static/mana_app/js/carousel_figure.js"></script>
+{% endblock %}

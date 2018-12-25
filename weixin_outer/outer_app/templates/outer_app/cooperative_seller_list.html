@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>合作商户</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/swiper.min.js"></script>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+</head>
+<body ontouchstart>
+    <div class="container user_select">
+        <div id="seller_list" class="seller_item ys_panel">
+            {% for shop in shops %}
+            <div class="ys_item_media" href="javascript:;">
+                <div class="ys_item_hd">
+                    <img src="{{ shop.img_path }}" alt="">
+                </div>
+                <div class="ys_item_bd">
+                    <div class="mi_title ys_flex">
+                        <span class="shop_name">{{ shop.name }}</span>
+                        <span class="support_pay">支持积分消费</span>
+                    </div>
+                    <p class="ys_item_p">地址：{{ shop.address}}</p>
+                    <p class="ys_item_p">电话：{{ shop.seller_tel }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="nomore">没有更多了</div>
+    </div>
+    <script>
+        $(function(){
+            if($('div.ys_item_media').length == 0){
+                $('#seller_list').hide();
+                $('.nomore').text('暂无此类合作商户');
+            }
+        });
+    </script>
+</body>
+</html>

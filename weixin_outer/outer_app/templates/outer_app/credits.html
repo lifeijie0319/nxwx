@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的积分</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src=" https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/asset/fastclick.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/popup.js"></script>
+    <script src="/static/outer_app/js/password_keyboard.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/credits.js?v=20180113"></script>
+</head>
+<body ontouchstart>
+    <div id="req_token" style="display:none">{{ req_token }}</div>
+	<div id="page_credits" class="container">
+		<div class="mypoint">
+		    <img src="/static/outer_app/images/coin.png" width="50" height="50">
+		    <div class="ys_cell_bd">
+		        <h1 id="credits">{{ credits }}<span>积分</span></h1>
+		        <!--<p>已连续签到0天</p>-->
+		    </div>
+		    <a class="signinow" href="{% url 'outer_app:sign_page' %}">签到加积分</a>
+		</div>
+		<div class="ys_grids ys_grids_border grids_small">
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:staticfile' name='payment' %}">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_pay.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">付积分</p>
+		    </a>
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:staticfile' name='receipt' %}?qrcodeId=00000002">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_receive.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">收积分</p>
+		    </a>
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:promotion_page' %}">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_promotion.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">积分优惠</p>
+		    </a>
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:staticfile' name='credits_history' %}?type=user">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_detail.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">积分明细</p>
+		    </a>
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:coupon_page' %}">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_coupon.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">我的票券</p>
+		    </a>
+		    <a class="ys_grid grid_border" href="{% url 'outer_app:lottery_page' %}">
+		        <div class="ys_grid_icon">
+		            <img src="/static/outer_app/images/credits_icon_lottery.png" alt="">
+		        </div>
+		        <p class="ys_grid_label">抽奖</p>
+		    </a>
+            <a class="ys_grid grid_border" href="{% url 'outer_app:lottery_details' %}">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/credits_icon_award.png" alt="">
+                </div>
+                <p class="ys_grid_label">抽奖奖品</p>
+            </a>
+            <a id="credits_scan" class="ys_grid grid_border" href="javascript:;">
+                <div class="ys_grid_icon">
+                    <img src="/static/outer_app/images/credits_icon_scan.png" alt="">
+                </div>
+                <p class="ys_grid_label">扫一扫</p>
+            </a>
+		</div>
+		<div class="ys_panel">
+		    <a class="ys_item_ad" href="{% url 'outer_app:invitation_register_page' %}">
+		        <div class="ys_item_bd">
+		            <h1>推荐好友 <span>立赚积分</span></h1>
+		            <p>每推荐1名好友成功注册积分账户，您和您的好友即得{{ gift_credits }}积分</p>
+		        </div>
+		        <div class="ys_item_ft">
+		            <img src="/static/outer_app/images/ad_points.png">
+		        </div>
+		    </a>
+		</div>
+	</div>
+    <div id="password_keyboard_area"></div>
+    <div id="page_set_amount" class="ys_page">
+        <div class="ys_content ys_page_x">
+            <div class="acount_user">
+                <img id="set_amount_img" src="/static/outer_app/images/user_default.jpg">
+                <p class="acount_user_tips" id="set_amount_tips"></p>
+            </div>
+            <form id="set_amount_form">
+                <div class="amount_input">
+                    <label class="amount_title" for="set_amount_input">积分数额</label>
+                    <input type="number" id="set_amount_input" pattern="^[1-9]{1}\d*$" placeholder="请输入积分数额" emptyTips="积分数额不能为空" notMatchTips="请输入正确的数额" required>
+                </div>
+                <div class="ys_btns">
+                    <a id="set_amount_submit" class="ys_btn" href="javascript:;">完成</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="page_show_amount" class="ys_page">
+        <div class="ys_content ys_page_x">
+            <div class="acount_user">
+                <img id="show_amount_img" src="/static/outer_app/images/user_default.jpg">
+                <p class="acount_user_tips" id="show_amount_tips"></p>
+            </div>
+            <div class="entered_amount">
+                <h1><span id="show_amount_credits"></span>积分</h1>
+            </div>
+            <div class="ys_btns">
+                <a id="show_amount_submit" class="ys_btn" href="javascript:;">完成</a>
+            </div>
+        </div>
+    </div>
+<!-- 底部导航 -->
+<div class="fixed_h"></div>
+<div class="ys_tabbar">
+    <a href="{% url 'outer_app:staticfile' name='index' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-zhuye"></i>
+        </div>
+        <p class="ys_tabbar_label">首页</p>
+    </a>
+    <a href="{% url 'outer_app:credits_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-licai"></i>
+        </div>
+        <p class="ys_tabbar_label">积分</p>
+    </a>
+    <a href="{% url 'outer_app:staticfile' name='reservation'%}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-shenghuo"></i>
+        </div>
+        <p class="ys_tabbar_label">预约</p>
+    </a>
+    <a href="{% url 'outer_app:user_info_page' %}" class="ys_tabbar_item">
+        <div class="ys_tabbar_icon">
+            <i class="iconfont icon-wo"></i>
+        </div>
+        <p class="ys_tabbar_label">我的</p>
+    </a>
+</div>
+<script>init_nav();</script>
+<!-- 底部导航结束 -->
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>商户注册申请处理</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link href="/static/outer_app/css/yinsho.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/main.css" rel="stylesheet"/>
+    <link href="/static/outer_app/css/manager.css" rel="stylesheet"/>
+    <link href="/static/outer_app/font/iconfont.css" rel="stylesheet"/>
+    <script src="/static/outer_app/asset/jquery.min.js"></script>
+    <script src="/static/outer_app/js/validate.js"></script>
+    <script src="/static/outer_app/js/tools.js"></script>
+    <script src="/static/outer_app/js/seller_register_audit.js"></script>
+</head>
+<body ontouchstart>
+	<div class="container">
+	    <div class="ys_navbar">
+	        <a class="ys_navbar_item nav_active" href="#tab1">未处理</a>
+            <a class="ys_navbar_item" href="#tab2">已完成</a>
+	    </div>
+	    <div class="ys_tab">
+            <input name="role" type="hidden" value="{{ role }}">
+	        <div id="tab1" class="ys_tab_item tab_active">
+                {% for apply in apply_uncompleted %}
+				<div name="apply_block" apply_id="{{ apply.id }}" class="withdraw_item ys_panel">
+                    {% if role == '客户经理' %}
+                    {% else %}
+                    <div class="ys_cell ys_cell_select">
+                        <div class="ys_cell_hd">
+                            <label>分配给</label>
+                        </div>
+                        <div class="ys_cell_bd">
+                            <select class="ys_select" name="select">
+                                {% for item in allocation %}
+                                <option value="{{ item.id }}">{{ item.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="pay_ph_bd">
+                        <div class="pay_ph_item">
+                            <label>申请时间：</label>
+                            <span>{{ apply.apply_datetime }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>申请人：</label>
+                            <span>{{ apply.name }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>账号：</label>
+                            <span>{{ apply.accountno }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>手机号：</label>
+                            <span>{{ apply.telno }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺名称：</label>
+                            <span>{{ apply.shop_name }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺类型：</label>
+                            <span>{{ apply.shop_type }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺地址：</label>
+                            <span>{{ apply.shop_address }}</span>
+                        </div>
+                    </div>
+                    <div class="pay_ph_ft">
+                        {% if role == '客户经理' %}
+                        <div><a name="reject" class="ys_btn ys_btn_default ys_btn_mini" href="javascript:;">驳回</a></div>
+                        <div style="margin-left:15px"><a name="pass" class="ys_btn ys_btn_mini" href="javascript:;">通过</a></div>
+                        {% else %}
+                        <a name="allocate" class="ys_btn ys_btn_mini" href="javascript:;">确定</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+	        </div>
+	        <div id="tab2" class="ys_tab_item">
+                {% for apply in apply_completed %}
+	        	<div class="withdraw_item ys_panel">
+                    <div class="ys_cell" href="javascript:;">
+                        <div class="ys_cell_bd color_primary">{{ apply.status }}</div>
+                    </div>
+                    <div class="pay_ph_bd">
+                        <div class="pay_ph_item">
+                            <label>申请时间：</label>
+                            <span>{{ apply.apply_datetime }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>申请人：</label>
+                            <span>{{ apply.name }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>账号：</label>
+                            <span>{{ apply.accountno }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>手机号：</label>
+                            <span>{{ apply.telno }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺名称：</label>
+                            <span>{{ apply.shop_name }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺类型：</label>
+                            <span>{{ apply.shop_type }}</span>
+                        </div>
+                        <div class="pay_ph_item">
+                            <label>店铺地址：</label>
+                            <span>{{ apply.shop_address }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+	        </div>
+	    </div>
+        <div class="nomore">没有更多了</div>
+	</div>
+	<script type="text/javascript">
+	    +function ($) {
+	      "use strict";
+
+	      var ITEM_ON = "nav_active";
+
+	      var showTab = function(a) {
+	        var $a = $(a);
+	        if($a.hasClass(ITEM_ON)) return;
+	        var href = $a.attr("href");
+
+	        if(!/^#/.test(href)) return ;
+
+	        $a.parent().find("."+ITEM_ON).removeClass(ITEM_ON);
+	        $a.addClass(ITEM_ON);
+
+	        var bd = $a.parents(".container").find(".ys_tab");
+
+	        bd.find(".tab_active").removeClass("tab_active");
+
+	        $(href).addClass("tab_active");
+	      }
+
+	      $.showTab = showTab;
+
+	      $(document).on("click", ".ys_navbar_item, .weui-tabbar__item", function(e) {
+	        var $a = $(e.currentTarget);
+	        var href = $a.attr("href");
+	        if($a.hasClass(ITEM_ON)) return;
+	        if(!/^#/.test(href)) return;
+
+	        e.preventDefault();
+
+	        showTab($a);
+	      });
+
+	    }($);
+	</script>
+</body>

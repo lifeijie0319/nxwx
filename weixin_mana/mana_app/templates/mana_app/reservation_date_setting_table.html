@@ -1,0 +1,44 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    <thead>
+                        <tr>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">节假日描述</th>
+                            <th class="text-center">节假日日期</th>
+                            <th class="text-center">最后一次处理人员</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for setting in settings %}
+                        <tr id="id" date_setting_id="{{setting.date_setting.id}}" column_id="{{setting.id}}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="dec">{{ setting.dec }}</td>
+                            <td field="date">{{ setting.date|date:"Y-m-d" }}</td>
+                            <td field="date_setting_name">{{ setting.manager.name }}</td>
+                            <td>
+                                <input name="delete_date_setting" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_date_setting" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if settings %}
+<ul class="pager">
+    {% if settings.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ settings.number }}页</li>
+    <li name="total_page">共{{ settings.paginator.num_pages }}页</li>
+    <li name="count">共{{ settings.paginator.count }}条数据</li>
+    {% if settings.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

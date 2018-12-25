@@ -1,0 +1,14 @@
+                          {% for sign in datas %}
+                        <tr id="id" manager_id="{{sign.manager.id}}" column_id="{{sign.id}}">
+                            <td>{{forloop.counter}}</td>
+                            <td field="num">{{sign.num}}</td>
+                            <td field="second">{{sign.second}}</td>
+                            <td field="dec">{{sign.dec}}</td>
+                            <td field="manager_name">{{sign.manager.name}}</td>
+                            <td>
+                                <input name="delete_manager" type="button" class="btn btn-sm btn-danger" value="删除"/>
+                                <input name="update_manager" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td
+                            >
+                        </tr>
+ {% endfor%}

@@ -1,0 +1,73 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered table-small-font" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center" data-priority="1">编号</th>
+                            <th class="text-center" data-priority="1">银行机构号</th>
+                            <th class="text-center" data-priority="1">银行名称</th>
+                            <th class="text-center" data-priority="2">等级</th>
+                            <th class="text-center" data-priority="2">纬度</th>
+                            <th class="text-center" data-priority="2">经度</th>
+                            <th class="text-center" data-priority="6">银行营业时间</th>
+                            <th class="text-center" data-priority="2">地址</th>
+                            <th class="text-center" data-priority="2">从属机构</th>
+                            <th class="text-center" data-priority="3">联系电话</th>
+                            <th class="text-center" data-priority="4">是否调用取号机</th>
+                            <th class="text-center" data-priority="4">是否开放贷款预约</th>
+                            <th class="text-center" data-priority="4">是否开放取现预约</th>
+                            <th class="text-center" data-priority="4">是否开放开户预约</th>
+                            <th class="text-center" data-priority="4">是否开放ETC预约</th>
+                            <th class="text-center" data-priority="1">是否开放对公开户预约</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for branch in branches %}
+                        <tr branch_id="{{ branch.id }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td field="deptno">{{ branch.deptno }}</td>
+                            <td field="name">{{ branch.name }}</td>
+                            <td field="level">{{ branch.get_level_display }}</td>
+                            <td field="latitude">{{ branch.latitude }}</td>
+                            <td field="longitude">{{ branch.longitude }}</td>
+                            <td field="officehours">{{ branch.officehours }}</td>
+                            <td field="address">{{ branch.address }}</td>
+                            {% if branch.parent %}
+                            <td field="parent">{{ branch.parent.name }}</td>
+                            {% else %}
+                            <td field="parent">无</td>
+                            {% endif %}
+                            <td field="telno">{{ branch.telno }}</td>
+                            <td field="is_map">{% if branch.is_map %}是{% else %}否{% endif %}</td>
+                            <td field="is_loan">{% if branch.is_loan %}是{% else %}否{% endif %}</td>
+                            <td field="is_withdrawal">{% if branch.is_withdrawal %}是{% else %}否{% endif %}</td>
+                            <td field="is_oppen_account">{% if branch.is_oppen_account %}是{% else %}否{% endif %}</td>
+                            <td field="is_etc">{% if branch.is_etc %}是{% else %}否{% endif %}</td>
+                            <td field="is_dgkh">{% if branch.is_dgkh %}是{% else %}否{% endif %}</td>
+                            <td>
+                                <!--<input name="delete_branch" type="button" class="btn btn-sm btn-danger" value="删除"/>-->
+                                <input name="update_branch" type="button" class="btn btn-sm btn-success" value="更新"/>
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if branches %}
+<ul class="pager">
+    {% if branches.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ branches.number }}页</li>
+    <li name="total_page">共{{ branches.paginator.num_pages }}页</li>
+    <li name="count">共{{ branches.paginator.count }}条数据</li>
+    {% if branches.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}

@@ -1,0 +1,42 @@
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center table-bordered" name='addendum'>
+                    {% csrf_token %}
+                    <thead>
+                        <tr>
+                            <th class="text-center">抽奖日期</th>
+                            <th class="text-center">抽奖客户</th>
+                            <th class="text-center">抽奖次数</th>
+                            <th class="text-center">花费积分</th>
+                            <th class="text-center">抽中积分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lottery_record in lottery_records %}
+                        <tr>
+                            <td field="TRADE_DATE">{{ lottery_record.TRADE_DATE }}</td>
+                            <td field="NAME">{{ lottery_record.NAME }}</td>
+                            <td field="NUM">{{ lottery_record.NUM }}</td>
+                            <td field="COST">{{ lottery_record.COST }}</td>
+                            <td field="AWARD">{{ lottery_record.AWARD }}</td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+{% if lottery_records %}
+<ul class="pager">
+    {% if lottery_records.has_previous %}
+    <li><a action="first" href="javascript:;">首页</a></li>
+    <li><a action="prev" href="javascript:;">上一页</a></li>
+    {% endif %}
+    <li name="current_page">第{{ lottery_records.number }}页</li>
+    <li name="total_page">共{{ lottery_records.paginator.num_pages }}页</li>
+    <li name="count">共{{ lottery_records.paginator.count }}条数据</li>
+    {% if lottery_records.has_next %}
+    <li><a action="next" href="javascript:;">下一页</a></li>
+    <li><a action="last" href="javascript:;">末页</a></li>
+    {% endif %}
+</ul>
+{% else %}
+<strong><p class="text-center text-danger">查无数据</p></strong>
+{% endif %}
